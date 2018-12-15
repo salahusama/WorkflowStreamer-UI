@@ -6,6 +6,7 @@ import App from '../components/App';
 
 const initialState = {
     hello: {},
+    auth: {},
 };
 const middleware = [ thunk ];
 const mockStore = configureStore(middleware);
