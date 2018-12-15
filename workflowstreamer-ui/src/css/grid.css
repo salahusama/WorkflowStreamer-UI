@@ -1,0 +1,25 @@
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.flex-item {
+    background-color: aliceblue;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 10px 50px 10px 50px;
+}
+
+.flex-content {
+    display: inline-block;
+    vertical-align: baseline;
+}

@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^3.9.0",
+    "classnames": "^2.2.6",
+    "primeicons": "^1.0.0",
+    "primereact": "^2.0.0-rc.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",

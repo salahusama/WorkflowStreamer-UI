@@ -1,43 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { sayHello } from '../actions/app';
+import LoginForm from './LoginForm';
+import Tasks from './Tasks';
+import { logIn } from '../actions/app';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        props.sayHello();
+        this.submitLoginDetails = this.submitLoginDetails.bind(this);
+    }
+
+    submitLoginDetails(details) {
+        this.props.logIn(details);
     }
 
     render() {
-        const { hello } = this.props;
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <div>
-                        {hello || 'Loading...'}
+        const { user } = this.props;
+
+        // TODO: Show error messages if exist
+
+        if (!user) {
+                return (
+                <div className="flex-col" style={{ marginTop: '15vh' }}>
+                    <div className="flex-row">
+                        <LoginForm onSubmit={this.submitLoginDetails} />
                     </div>
-                </header>
-            </div>
-        );
+                </div>
+            );
+        } else {
+            return (
+                <Tasks />
+            );
+        }
     }
 }
 
 App.propTypes = {
-    hello: PropTypes.string,
-    sayHello: PropTypes.func.isRequired,
+    logIn: PropTypes.func.isRequired,
+    user: PropTypes.object,
 }
 
 function mapStateToProps(state) {
     return {
-        hello: state.hello.hello,
+        user: state.auth.user
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        sayHello: name => dispatch(sayHello(name)),
+        logIn: details => dispatch(logIn(details)),
     };
 }
 

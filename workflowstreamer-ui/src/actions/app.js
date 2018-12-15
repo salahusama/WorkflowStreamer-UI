@@ -11,3 +11,25 @@ export function sayHello(name) {
             }));
     }
 }
+
+export function logIn(details) {
+    return dispatch => {
+        return AppApi.login(details)
+            .then(response => response.json())
+            .then(json => dispatch({
+                type: ActionTypes.LOGIN,
+                payload: json,
+            }));
+    }
+}
+
+export function getTasks() {
+    return dispatch => {
+        return AppApi.getTasks()
+            .then(response => response.json())
+            .then(json => dispatch({
+                type: ActionTypes.RECIEVED_TASKS,
+                payload: json,
+            }));
+    }
+}
