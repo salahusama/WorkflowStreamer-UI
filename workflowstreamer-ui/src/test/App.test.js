@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from 'redux-mock-store';
+import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
 import App from '../components/App';
 
 const initialState = {
-    hello: {},
     auth: {},
+    tasks: {},
 };
 const middleware = [ thunk ];
 const mockStore = configureStore(middleware);
@@ -15,7 +16,11 @@ let store;
 
 beforeEach(() => {
     store = mockStore(initialState);
-    wrapper = <App store={store}/>;
+    wrapper = (
+        <Provider store={store}>
+            <App />
+        </Provider>
+    );
 });
 
 it('renders without crashing', () => {
