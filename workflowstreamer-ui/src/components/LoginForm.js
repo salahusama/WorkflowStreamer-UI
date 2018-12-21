@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { FormGroup, InputGroup, Button, Intent } from "@blueprintjs/core";
+import AppToaster from '../utils/AppToaster';
+import Status from '../constants/status';
 
 class LoginForm extends PureComponent {
     constructor(props) {
@@ -9,7 +12,6 @@ class LoginForm extends PureComponent {
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.state = {
-            didSubmit: false,
             form: {
                 username: null,
                 password: null,
@@ -17,12 +19,19 @@ class LoginForm extends PureComponent {
         }
     }
 
+    componentWillUnmount() {
+        AppToaster.show({
+            message: "Login Successful",
+            intent: Intent.SUCCESS,
+        })
+    }
+
     handleUsernameChange(event) {
         const { form } = this.state;
         this.setState({
             form: {
                 ...form,
-                username: event.target.value
+                username: event.target.value,
             }
         });
     }
@@ -37,26 +46,33 @@ class LoginForm extends PureComponent {
         });
     }
 
-    logIn() {
+    logIn(e) {
+        e.preventDefault();
         this.setState({ didSubmit: true });
         this.props.onSubmit(this.state.form);
     }
 
     render() {
-        const { didSubmit } = this.state;
+        const { status } = this.props;
+        const isPending = status === Status.PENDING;
 
         return (
-            <FormGroup label="Login" labelFor="text-input">
-                <InputGroup onChange={this.handleUsernameChange} disabled={didSubmit} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} />
-                <InputGroup onChange={this.handlePasswordChange} disabled={didSubmit} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />
-                <Button loading={didSubmit} icon="log-in" intent={Intent.PRIMARY} onClick={this.logIn}>Log In</Button>
-            </FormGroup>
+            <form onSubmit={this.logIn}>
+                <FormGroup label="Login" labelFor="text-input">
+                    <InputGroup onChange={this.handleUsernameChange} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus />
+                    <InputGroup onChange={this.handlePasswordChange} disabled={isPending} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />
+                    <Button type="submit" loading={isPending} icon="log-in" intent={Intent.PRIMARY}>Log In</Button>
+                </FormGroup>
+            </form>
         );
     }
 }
 
 LoginForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
-}
+    state: PropTypes.string,
+};
 
-export default LoginForm;
+export default connect(state => ({
+    status: state.auth.status,
+}))(LoginForm);

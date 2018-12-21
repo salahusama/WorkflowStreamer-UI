@@ -7,9 +7,7 @@ export function login({ username, password }) {
     const url = 'http://localhost/users/login';
     return fetch(url, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             username,
             password,
@@ -20,4 +18,17 @@ export function login({ username, password }) {
 export function getTasks() {
     const url = 'http://localhost/tasks';
     return fetch(url);
+}
+
+export function addTask({ creatorId, title, description }) {
+    const url = 'http://localhost/tasks/task';
+    return fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            creatorId,
+            title,
+            description,
+        })
+    });
 }
