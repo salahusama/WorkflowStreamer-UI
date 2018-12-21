@@ -57,13 +57,17 @@ class LoginForm extends PureComponent {
         const isPending = status === Status.PENDING;
 
         return (
-            <form onSubmit={this.logIn}>
-                <FormGroup label="Login" labelFor="text-input">
-                    <InputGroup onChange={this.handleUsernameChange} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus />
-                    <InputGroup onChange={this.handlePasswordChange} disabled={isPending} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />
-                    <Button type="submit" loading={isPending} icon="log-in" intent={Intent.PRIMARY}>Log In</Button>
-                </FormGroup>
-            </form>
+            <div className="flex-col" style={{ marginTop: '15vh' }}>
+                <div className="flex-row">
+                    <form onSubmit={this.logIn}>
+                        <FormGroup label="Login" labelFor="text-input">
+                            <InputGroup onChange={this.handleUsernameChange} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus />
+                            <InputGroup onChange={this.handlePasswordChange} disabled={isPending} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />
+                            <Button type="submit" loading={isPending} icon="log-in" intent={Intent.PRIMARY}>Log In</Button>
+                        </FormGroup>
+                    </form>
+                </div>
+            </div>
         );
     }
 }

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
-import Tasks from './Tasks';
 import { logIn } from '../actions/app';
+import Page from './Page';
 
 class App extends Component {
     constructor(props) {
@@ -18,19 +18,11 @@ class App extends Component {
     render() {
         const { user } = this.props;
 
-        if (!user) {
-                return (
-                    <div className="flex-col" style={{ marginTop: '15vh' }}>
-                        <div className="flex-row">
-                            <LoginForm onSubmit={this.submitLoginDetails} />
-                        </div>
-                    </div>
-            );
-        } else {
-            return (
-                <Tasks />
-            );
-        }
+        return (
+            user
+            ? <Page />
+            : <LoginForm onSubmit={this.submitLoginDetails} />
+        );
     }
 }
 
