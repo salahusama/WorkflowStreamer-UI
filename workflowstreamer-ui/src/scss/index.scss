@@ -1,0 +1,22 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+@import "./grid.scss";
+@import "./tasks.scss";
+
+body {
+  margin: 0;
+  padding-top: calc(#{$pt-navbar-height} + 10px);
+  background-color: rgb(216, 216, 216);
+}
+
+.mid-overlay {
+  position: fixed;
+  margin-top: calc(#{$pt-navbar-height} + 10px);;
+  max-width: 50vw;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// This is a bad idea, but I could not find another way
+.overlay-backdrop {
+  z-index: -1;
+}

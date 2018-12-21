@@ -1,0 +1,25 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.tasks-container {
+    max-height: calc(100vh - #{$pt-navbar-height} - 10px);
+    padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.tasks-column {
+    float: left;
+    max-height: inherit;
+    overflow-x: scroll;
+    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 1px;
+    padding-bottom: 20px;
+    min-width: 30vh;
+    border-left: 2px solid #c3c2c2;
+}
+
+.task-item {
+    margin-top: 10px;
+}
