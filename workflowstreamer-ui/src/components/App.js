@@ -18,15 +18,13 @@ class App extends Component {
     render() {
         const { user } = this.props;
 
-        // TODO: Show error messages if exist
-
         if (!user) {
                 return (
-                <div className="flex-col" style={{ marginTop: '15vh' }}>
-                    <div className="flex-row">
-                        <LoginForm onSubmit={this.submitLoginDetails} />
+                    <div className="flex-col" style={{ marginTop: '15vh' }}>
+                        <div className="flex-row">
+                            <LoginForm onSubmit={this.submitLoginDetails} />
+                        </div>
                     </div>
-                </div>
             );
         } else {
             return (
@@ -43,7 +41,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        user: state.auth.user
+        user: state.auth.user,
     };
 }
 
