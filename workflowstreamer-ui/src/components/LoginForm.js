@@ -9,12 +9,14 @@ class LoginForm extends PureComponent {
     constructor(props) {
         super(props);
         this.logIn = this.logIn.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleFormChange = this.handleFormChange.bind(this);
+        this.toggleSignUp = this.toggleSignUp.bind(this);
         this.state = {
             form: {
+                email: null,
                 username: null,
                 password: null,
+                signup: false,
             }
         }
     }
@@ -26,23 +28,23 @@ class LoginForm extends PureComponent {
         })
     }
 
-    handleUsernameChange(event) {
+    handleFormChange(event, field) {
         const { form } = this.state;
         this.setState({
             form: {
                 ...form,
-                username: event.target.value,
+                [field]: event.target.value,
             }
         });
     }
 
-    handlePasswordChange(event) {
-        const { form } = this.state;
+    toggleSignUp() {
+        const { form, form: { signup } } = this.state;
         this.setState({
             form: {
                 ...form,
-                password: event.target.value,
-            }
+                signup: !signup,
+            },
         });
     }
 
@@ -54,16 +56,24 @@ class LoginForm extends PureComponent {
 
     render() {
         const { status } = this.props;
+        const { signup } = this.state.form;
         const isPending = status === Status.PENDING;
+        const formAction = signup ? 'Sign Up' : 'Log In';
 
         return (
             <div className="flex-col" style={{ marginTop: '15vh' }}>
                 <div className="flex-row">
                     <form onSubmit={this.logIn}>
-                        <FormGroup label="Login" labelFor="text-input">
-                            <InputGroup onChange={this.handleUsernameChange} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus />
-                            <InputGroup onChange={this.handlePasswordChange} disabled={isPending} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />
-                            <Button type="submit" loading={isPending} icon="log-in" intent={Intent.PRIMARY}>Log In</Button>
+                        <FormGroup label={formAction} labelFor="text-input">
+                        {signup &&
+                            <InputGroup onChange={(e) => this.handleFormChange(e, 'email')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Email" style={{ marginBottom: '10px' }} autoFocus />
+                        }
+                            <InputGroup onChange={(e) => this.handleFormChange(e, 'username')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus />
+                            <InputGroup onChange={(e) => this.handleFormChange(e, 'password')} disabled={isPending} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />
+                            <Button type="submit" loading={isPending} icon="log-in" intent={Intent.PRIMARY}>{formAction}</Button>
+                            <Button className="alt-action-text" minimal={true} disabled={isPending} onClick={this.toggleSignUp}>
+                                {signup ? 'Log In' : 'Sign Up'}
+                            </Button>
                         </FormGroup>
                     </form>
                 </div>

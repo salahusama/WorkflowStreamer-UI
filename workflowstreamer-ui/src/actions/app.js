@@ -15,9 +15,47 @@ export function sayHello(name) {
 }
 
 export function logIn(details) {
+    // TODO: Include email
+    const { username, password, signup } = details;
+    const loginDetails = { username, password };
+    const signupDetails = { username, password };
+
+    if (signup) {
+        return async dispatch => {
+            dispatch({ type: ActionTypes.REQUESTED_SIGNUP });
+            const response = await AppApi.signUp(signupDetails);
+            
+            switch (response.status) {
+                case 200:
+                    const json = await response.json();
+                    AppToaster.show({
+                        message: `Welcome to Workflow Streamer, ${username}!`,
+                        intent: Intent.SUCCESS,
+                    }); 
+                    dispatch({ type: ActionTypes.SIGNUP })
+                    return dispatch({
+                        type: ActionTypes.LOGIN,
+                        payload: json,
+                    });
+                case 403:
+                    AppToaster.show({
+                        message: 'Sorry, this username is already taken. Please try a different username.',
+                        intent: Intent.WARNING,
+                    });
+                    return dispatch({ type: ActionTypes.FAILED_SIGNUP });
+                default:
+                    AppToaster.show({
+                        message: 'Error occured while signing up. Please try again.',
+                        intent: Intent.DANGER,
+                    });
+                    return dispatch({ type: ActionTypes.FAILED_SIGNUP });
+            }
+        };
+    }
+
     return async dispatch => {
         dispatch({ type: ActionTypes.REQUESTED_LOGIN });
-        const response = await AppApi.login(details);
+        const response = await AppApi.logIn(loginDetails);
         
         if (response.status === 200) {
             const json = await response.json(); 

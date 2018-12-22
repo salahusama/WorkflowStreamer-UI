@@ -20,3 +20,9 @@ body {
 .overlay-backdrop {
   z-index: -1;
 }
+
+.alt-action-text {
+  text-decoration: underline;
+  font-style: italic;
+  float: right;
+}
