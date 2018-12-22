@@ -47,12 +47,29 @@ export function getTasks() {
 }
 
 export function addTask(taskDetails) {
-    return (dispatch, getState) => {
+    return async (dispatch, getState) => {
         const newTask = {
             ...taskDetails,
             creatorId: getState().auth.user.userId,
+        };
+        const response = await AppApi.addTask(newTask);
+        
+        if (response.status === 200) {
+            const json = await response.json(); 
+            AppToaster.show({
+                message: 'Task added successfully.',
+                intent: Intent.SUCCESS,
+            });
+            return dispatch({
+                type: ActionTypes.ADDED_TASK,
+                payload: json,
+            });
+        } else {
+            AppToaster.show({
+                message: 'Error occured while adding new task. Please try again.',
+                intent: Intent.DANGER,
+            });
+            return dispatch({ type: ActionTypes.FAILED_TASK_ADITION });
         }
-        return AppApi.addTask(newTask)
-            .then(() => dispatch({ type: ActionTypes.ADDED_TASK }));
-    }
+    };
 }

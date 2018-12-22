@@ -42,7 +42,6 @@ class NewTaskForm extends PureComponent {
 
     addTask(e) {
         e.preventDefault();
-        console.log(e.target);
         this.props.addTask(this.state.form);
         this.props.onSubmit();
     }
