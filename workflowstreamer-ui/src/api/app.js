@@ -15,12 +15,13 @@ export function logIn({ username, password }) {
     });
 }
 
-export function signUp({ username, password }) {
+export function signUp({ email, username, password }) {
     const url = 'http://localhost/users/user';
     return fetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+            email,
             username,
             password,
         })

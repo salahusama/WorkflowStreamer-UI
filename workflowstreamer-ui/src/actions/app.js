@@ -15,10 +15,9 @@ export function sayHello(name) {
 }
 
 export function logIn(details) {
-    // TODO: Include email
-    const { username, password, signup } = details;
+    const { email, username, password, signup } = details;
     const loginDetails = { username, password };
-    const signupDetails = { username, password };
+    const signupDetails = { email, username, password };
 
     if (signup) {
         return async dispatch => {
