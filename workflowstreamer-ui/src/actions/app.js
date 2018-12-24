@@ -3,6 +3,7 @@ import ActionTypes from '../constants/actionTypes';
 import * as AppApi from '../api/app';
 import * as UsersApi from '../api/user';
 import * as TasksApi from '../api/tasks';
+import * as ProjectsApi from '../api/projects';
 import AppToaster from '../utils/AppToaster';
 
 export function logIn(details) {
@@ -119,4 +120,25 @@ export function getUserStages() {
             return dispatch({ type: ActionTypes.FAILED_STAGES });
         }
     }
+}
+
+export function getProjects() {
+    return async (dispatch, getState) => {
+        const { userId } = getState().auth.user;
+        return ProjectsApi.getUserProjects(userId)
+            .then(response => response.json())
+            .then(json => dispatch({
+                type: ActionTypes.RECIEVED_PROJECTS,
+                payload: json,
+            }));
+    };
+}
+
+export function updateSelectedProject(project) {
+    return dispatch => {
+        return dispatch({
+            type: ActionTypes.UPDATED_SELECTED_PROJECT,
+            payload: project,
+        })
+    };
 }

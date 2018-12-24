@@ -14,9 +14,14 @@ class Tasks extends PureComponent {
     }
 
     render() {
-        const { tasks, userStages } = this.props;
+        const { tasks, selectedProject, userStages } = this.props;
+        let tasksToShow = tasks;
 
-        if (tasks.length === 0) {
+        if (selectedProject) {
+            tasksToShow = tasks.filter(task => task.projectId === selectedProject.projectId);
+        }
+
+        if (tasksToShow && tasksToShow.length === 0) {
             return <NonIdealState
                 className="page-non-ideal"
                 title="No Tasks Found"
@@ -37,7 +42,7 @@ class Tasks extends PureComponent {
         return (
             <div className="tasks-container">
                 {userStages.map((stage, index) => {
-                    const columnTasks = tasks.filter(task => task.stage === stage);
+                    const columnTasks = tasksToShow.filter(task => task.stage === stage);
                     return <Column
                         key={index}
                         columnName={stage}
@@ -61,6 +66,7 @@ function mapStateToProps(state) {
     return {
         tasks: state.tasks,
         userStages: state.userStages,
+        selectedProject: state.projects.selectedProject,
     };
 }
 
