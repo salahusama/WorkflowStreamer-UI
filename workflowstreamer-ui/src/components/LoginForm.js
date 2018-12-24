@@ -21,6 +21,13 @@ class LoginForm extends PureComponent {
         }
     }
 
+    componentDidMount() {
+        this.props.onSubmit({
+            username: 'tester',
+            password: 'pass',
+        });
+    }
+
     componentWillUnmount() {
         AppToaster.show({
             message: "Login Successful",
@@ -66,7 +73,7 @@ class LoginForm extends PureComponent {
                     <form onSubmit={this.logIn}>
                         <FormGroup label={formAction} labelFor="text-input">
                         {signup &&
-                            <InputGroup onChange={(e) => this.handleFormChange(e, 'email')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Email" style={{ marginBottom: '10px' }} autoFocus required />
+                            <InputGroup onChange={(e) => this.handleFormChange(e, 'email')} disabled={isPending} leftIcon="envelope" large={true} type="email" placeholder="Email" style={{ marginBottom: '10px' }} autoFocus required />
                         }
                             <InputGroup onChange={(e) => this.handleFormChange(e, 'username')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus required />
                             <InputGroup onChange={(e) => this.handleFormChange(e, 'password')} disabled={isPending} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Navbar, Button, Alignment, Icon, Tooltip, Position, Overlay } from '@blueprintjs/core';
 import Tasks from './Tasks';
 import NewTaskForm from './NewTaskForm';
-
+import ProjectSelector from './ProjectSelector';
 class Page extends PureComponent {
     constructor(props) {
         super(props);
@@ -29,7 +29,7 @@ class Page extends PureComponent {
                     <Navbar.Group align={Alignment.LEFT}>
                         <Button minimal={true} icon="menu" />
                         <Navbar.Divider />
-                        <Button minimal={true} rightIcon="caret-down" text="Project Name" />
+                        <ProjectSelector />
                         <Navbar.Divider />
                         <Tooltip content="New Task" position={Position.RIGHT}>
                             <Button minimal={true} rightIcon="insert" onClick={this.toggleOverlay} />
