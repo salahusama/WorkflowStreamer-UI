@@ -21,7 +21,7 @@ class Tasks extends PureComponent {
                 <Column columnName={"Column D"} tasks={tasks} />
                 <Column columnName={"Column E"} tasks={tasks} />
             </div>
-        )
+        );
     }
 }
 

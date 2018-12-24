@@ -66,9 +66,9 @@ class LoginForm extends PureComponent {
                     <form onSubmit={this.logIn}>
                         <FormGroup label={formAction} labelFor="text-input">
                         {signup &&
-                            <InputGroup onChange={(e) => this.handleFormChange(e, 'email')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Email" style={{ marginBottom: '10px' }} autoFocus />
+                            <InputGroup onChange={(e) => this.handleFormChange(e, 'email')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Email" style={{ marginBottom: '10px' }} autoFocus required />
                         }
-                            <InputGroup onChange={(e) => this.handleFormChange(e, 'username')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus />
+                            <InputGroup onChange={(e) => this.handleFormChange(e, 'username')} disabled={isPending} leftIcon="user" large={true} type="text" placeholder="Username" style={{ marginBottom: '10px' }} autoFocus required />
                             <InputGroup onChange={(e) => this.handleFormChange(e, 'password')} disabled={isPending} leftIcon="lock" large={true} type="password" placeholder="Password" style={{ marginBottom: '10px' }} />
                             <Button type="submit" loading={isPending} icon="log-in" intent={Intent.PRIMARY}>{formAction}</Button>
                             <Button className="alt-action-text" minimal={true} disabled={isPending} onClick={this.toggleSignUp}>
