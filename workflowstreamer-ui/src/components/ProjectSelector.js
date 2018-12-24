@@ -45,10 +45,15 @@ class ProjectSelector extends PureComponent {
         this.props.updateSelectedProject(project === allProjectsObj ? null : project);
     }
 
+    itemPredicate(input, project) {
+        const projectName = project.name.toLowerCase();
+        const inputValue = input.toLowerCase();
+        return projectName.includes(inputValue);
+    }
+
     render() {
         const { projects } = this.props;
         const { selectedItem } = this.state;
-        const textToShow = selectedItem ? selectedItem.name : 'All Projects';
 
         if (!projects) {
             return null;
@@ -59,11 +64,13 @@ class ProjectSelector extends PureComponent {
         return (
             <Select
                 items={projectsToShow}
+                itemPredicate={this.itemPredicate}
                 itemRenderer={this.renderItem}
                 onItemSelect={this.handleClick}
-                filterable={false}
+                filterable={true}
+                noResults={<MenuItem disabled={true} text="No results." />}
             >
-                <Button minimal={true} rightIcon="caret-down" text={textToShow} />
+                <Button minimal={true} rightIcon="caret-down" text={selectedItem.name} />
             </Select>
         );
     }
