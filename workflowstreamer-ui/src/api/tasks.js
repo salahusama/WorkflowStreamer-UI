@@ -1,5 +1,5 @@
-export function getTasks() {
-    const url = 'http://localhost/tasks';
+export function getUserTasks(userId) {
+    const url = `http://localhost/tasks/user/${userId}`;
     return fetch(url);
 }
 

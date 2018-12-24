@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getTasks } from '../actions/app';
 import { getUserStages } from '../actions/app';
 import Column from './Column';
-import { Spinner, Intent } from '@blueprintjs/core';
+import { Spinner, Intent, NonIdealState } from '@blueprintjs/core';
 
 class Tasks extends PureComponent {
     componentWillMount() {
@@ -15,6 +15,15 @@ class Tasks extends PureComponent {
 
     render() {
         const { tasks, userStages } = this.props;
+
+        if (tasks.length === 0) {
+            return <NonIdealState
+                className="page-non-ideal"
+                title="No Tasks Found"
+                description="It seems like you don't have any tasks, try adding a task to see it here."
+                icon="issue"
+            />;
+        }
 
         if (!userStages) {
             return <Spinner

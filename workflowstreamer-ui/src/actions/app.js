@@ -64,8 +64,9 @@ export function logIn(details) {
 }
 
 export function getTasks() {
-    return dispatch => {
-        return TasksApi.getTasks()
+    return async (dispatch, getState) => {
+        const { userId } = getState().auth.user;
+        return TasksApi.getUserTasks(userId)
             .then(response => response.json())
             .then(json => dispatch({
                 type: ActionTypes.RECIEVED_TASKS,
