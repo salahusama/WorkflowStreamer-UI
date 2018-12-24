@@ -1,18 +1,9 @@
 import { Intent } from '@blueprintjs/core';
 import ActionTypes from '../constants/actionTypes';
 import * as AppApi from '../api/app';
+import * as UsersApi from '../api/user';
+import * as TasksApi from '../api/tasks';
 import AppToaster from '../utils/AppToaster';
-
-export function sayHello(name) {
-    return dispatch => {
-        return AppApi.getHello(name)
-            .then(response => response.text())
-            .then(text => dispatch({
-                type: ActionTypes.SAY_HELLO,
-                payload: text,
-            }));
-    }
-}
 
 export function logIn(details) {
     const { email, username, password, signup } = details;
@@ -74,7 +65,7 @@ export function logIn(details) {
 
 export function getTasks() {
     return dispatch => {
-        return AppApi.getTasks()
+        return TasksApi.getTasks()
             .then(response => response.json())
             .then(json => dispatch({
                 type: ActionTypes.RECIEVED_TASKS,
@@ -89,7 +80,7 @@ export function addTask(taskDetails) {
             ...taskDetails,
             creatorId: getState().auth.user.userId,
         };
-        const response = await AppApi.addTask(newTask);
+        const response = await TasksApi.addTask(newTask);
         
         if (response.status === 200) {
             const json = await response.json(); 
@@ -109,4 +100,22 @@ export function addTask(taskDetails) {
             return dispatch({ type: ActionTypes.FAILED_TASK_ADITION });
         }
     };
+}
+
+export function getUserStages() {
+    return async (dispatch, getState) => {
+        const { userId } = getState().auth.user;
+        const response = await UsersApi.getUserStages(userId);
+        const json = await response.json();
+
+        if (response.status === 200) {
+            const stageNames = json.map(stage => (stage.stage));
+            return dispatch({
+                type: ActionTypes.RECIEVED_STAGES,
+                payload: stageNames,
+            });
+        } else {
+            return dispatch({ type: ActionTypes.FAILED_STAGES });
+        }
+    }
 }

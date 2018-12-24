@@ -8,9 +8,7 @@ import NewTaskForm from './NewTaskForm';
 class Page extends PureComponent {
     constructor(props) {
         super(props);
-
         this.toggleOverlay = this.toggleOverlay.bind(this);
-
         this.state = {
             isOpen: false,
         };
