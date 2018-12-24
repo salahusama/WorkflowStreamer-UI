@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, MenuItem } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
-import { getProjects, updateSelectedProject } from '../actions/app';
+import { getProjects } from '../actions/app';
 
 const allProjectsObj = {
     projectId: 0,
@@ -17,7 +17,7 @@ class ProjectSelector extends PureComponent {
         this.handleClick = this.handleClick.bind(this);
         this.renderItem = this.renderItem.bind(this);
         this.state = {
-            selectedItem: allProjectsObj,
+            selectedItem: props.allowAll ? allProjectsObj : null,
         };
     }
 
@@ -42,7 +42,7 @@ class ProjectSelector extends PureComponent {
 
     handleClick(project) {
         this.setState({ selectedItem: project });
-        this.props.updateSelectedProject(project === allProjectsObj ? null : project);
+        this.props.onSelect(project === allProjectsObj ? null : project);
     }
 
     itemPredicate(input, project) {
@@ -52,14 +52,19 @@ class ProjectSelector extends PureComponent {
     }
 
     render() {
-        const { projects } = this.props;
+        const { allowAll, projects } = this.props;
         const { selectedItem } = this.state;
+        let projectsToShow = projects;
 
-        if (!projects) {
+        if (!projects || projects.length === 0) {
             return null;
         }
 
-        const projectsToShow = [allProjectsObj, ...projects];
+        if (allowAll) {
+            projectsToShow = [allProjectsObj, ...projects];
+        } else {
+            this.setState({ selectedItem: projects[0] });
+        }
 
         return (
             <Select
@@ -70,15 +75,20 @@ class ProjectSelector extends PureComponent {
                 filterable={true}
                 noResults={<MenuItem disabled={true} text="No results." />}
             >
-                <Button minimal={true} rightIcon="caret-down" text={selectedItem.name} />
+                <Button minimal={true} rightIcon="caret-down" text={selectedItem && selectedItem.name} />
             </Select>
         );
     }
 }
 
+ProjectSelector.defaultProps = {
+    allowAll: false,
+};
+
 ProjectSelector.propTypes = {
     getProjects: PropTypes.func.isRequired,
-    updateSelectedProject: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    allowAll: PropTypes.bool,
 }
 
 function mapStateToProps(state) {
@@ -90,7 +100,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getProjects: () => dispatch(getProjects()),
-        updateSelectedProject: (project) => dispatch(updateSelectedProject(project)),
     };
 }
 

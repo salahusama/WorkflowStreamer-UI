@@ -5,18 +5,24 @@ import { Navbar, Button, Alignment, Icon, Tooltip, Position, Overlay } from '@bl
 import Tasks from './Tasks';
 import NewTaskForm from './NewTaskForm';
 import ProjectSelector from './ProjectSelector';
+import { updateSelectedProject } from '../actions/app';
 class Page extends PureComponent {
     constructor(props) {
         super(props);
         this.toggleOverlay = this.toggleOverlay.bind(this);
+        this.setSelectedProject = this.setSelectedProject.bind(this);
         this.state = {
-            isOpen: false,
+            isOpen: true,
         };
     }
 
     toggleOverlay() {
         const { isOpen } = this.state;
         this.setState({ isOpen: !isOpen });
+    }
+
+    setSelectedProject(project) {
+        this.props.updateSelectedProject(project);
     }
 
     render() {
@@ -29,7 +35,7 @@ class Page extends PureComponent {
                     <Navbar.Group align={Alignment.LEFT}>
                         <Button minimal={true} icon="menu" />
                         <Navbar.Divider />
-                        <ProjectSelector />
+                        <ProjectSelector onSelect={this.setSelectedProject} allowAll={true} />
                         <Navbar.Divider />
                         <Tooltip content="New Task" position={Position.RIGHT}>
                             <Button minimal={true} rightIcon="insert" onClick={this.toggleOverlay} />
@@ -57,6 +63,7 @@ class Page extends PureComponent {
 
 Page.propTypes = {
     user: PropTypes.object.isRequired,
+    updateSelectedProject: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -65,4 +72,13 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(Page);
+function mapDispatchToProps(dispatch) {
+    return {
+        updateSelectedProject: (project) => dispatch(updateSelectedProject(project)),
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Page);

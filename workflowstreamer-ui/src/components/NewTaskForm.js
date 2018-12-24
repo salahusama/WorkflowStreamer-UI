@@ -50,7 +50,7 @@ class NewTaskForm extends PureComponent {
         return (
             <Card>
                 <form onSubmit={this.addTask}>
-                    <FormGroup>
+                    <FormGroup label="Add a New Task">
                         <InputGroup onChange={this.handleTitleChange} large={true} type="text" placeholder="Title" style={{ marginBottom: '10px' }} />
                         <TextArea onChange={this.handleDescriptionChange} large={true} fill={true} type="text" placeholder="Description" style={{ marginBottom: '10px' }} />
                         <Button type="submit" intent={Intent.SUCCESS}>Add Task</Button>
