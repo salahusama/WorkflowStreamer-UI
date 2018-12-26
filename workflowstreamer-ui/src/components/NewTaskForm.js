@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Card, InputGroup, FormGroup, Intent, Button, TextArea } from "@blueprintjs/core";
 import { addTask } from '../actions/app';
+import ProjectSelector from './ProjectSelector';
+import StageSelector from './StageSelector';
+import AppToaster from '../utils/AppToaster';
 
 class NewTaskForm extends PureComponent {
     constructor(props) {
@@ -11,11 +14,14 @@ class NewTaskForm extends PureComponent {
         this.addTask = this.addTask.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-
+        this.handleProjectChange = this.handleProjectChange.bind(this);
+        this.handleStageChange = this.handleStageChange.bind(this);
         this.state = {
             form: {
                 title: null,
                 description: null,
+                projectId: null,
+                stage: null,
             }
         }
     }
@@ -40,8 +46,46 @@ class NewTaskForm extends PureComponent {
         });
     }
 
+    handleProjectChange(project) {
+        const { form } = this.state;
+        this.setState({
+            form: {
+                ...form,
+                projectId: project && project.projectId,
+            }
+        });
+    }
+
+    handleStageChange(stage) {
+        const { form } = this.state;
+        this.setState({
+            form: {
+                ...form,
+                stage: stage,
+            }
+        });
+    }
+
     addTask(e) {
+        const { projectId, stage } = this.state.form;
         e.preventDefault();
+
+        if (!projectId) {
+            AppToaster.show({
+                message: 'Please select the project this task belongs to.',
+                intent: Intent.DANGER,
+            });
+            return;
+        }
+
+        if (!stage) {
+            AppToaster.show({
+                message: 'Please select the stage this task is in.',
+                intent: Intent.DANGER,
+            });
+            return;
+        }
+
         this.props.addTask(this.state.form);
         this.props.onSubmit();
     }
@@ -50,10 +94,13 @@ class NewTaskForm extends PureComponent {
         return (
             <Card>
                 <form onSubmit={this.addTask}>
-                    <FormGroup>
-                        <InputGroup onChange={this.handleTitleChange} large={true} type="text" placeholder="Title" style={{ marginBottom: '10px' }} />
+                    <FormGroup label="Add a New Task">
+                        <InputGroup onChange={this.handleTitleChange} large={true} type="text" placeholder="Title" style={{ marginBottom: '10px' }} required />
                         <TextArea onChange={this.handleDescriptionChange} large={true} fill={true} type="text" placeholder="Description" style={{ marginBottom: '10px' }} />
-                        <Button type="submit" intent={Intent.SUCCESS}>Add Task</Button>
+                        <ProjectSelector onSelect={this.handleProjectChange} minimal={false} />
+                        <StageSelector onSelect={this.handleStageChange} className="new-task-stage" />
+                        <br />
+                        <Button type="submit" intent={Intent.SUCCESS} className="new-task-submit">Add Task</Button>
                     </FormGroup>
                 </form>
             </Card>

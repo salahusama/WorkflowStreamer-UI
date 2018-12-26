@@ -3,7 +3,7 @@ export function getUserTasks(userId) {
     return fetch(url);
 }
 
-export function addTask({ creatorId, title, description }) {
+export function addTask({ creatorId, title, description, projectId, stage }) {
     const url = 'http://localhost/tasks/task';
     return fetch(url, {
         method: 'PUT',
@@ -12,6 +12,8 @@ export function addTask({ creatorId, title, description }) {
             creatorId,
             title,
             description,
+            projectId,
+            stage,
         })
     });
 }
