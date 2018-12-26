@@ -6,60 +6,72 @@ import * as TasksApi from '../api/tasks';
 import * as ProjectsApi from '../api/projects';
 import AppToaster from '../utils/AppToaster';
 
+function signUp(signupDetails) {
+    return async dispatch => {
+
+        dispatch({ type: ActionTypes.REQUESTED_SIGNUP });
+        const response = await AppApi.signUp(signupDetails);
+        
+        switch (response.status) {
+            case 200:
+                const json = await response.json();
+                AppToaster.show({
+                    message: `Welcome to Workflow Streamer, ${signupDetails.username}!`,
+                    intent: Intent.SUCCESS,
+                }); 
+                dispatch({ type: ActionTypes.SIGNUP })
+                return dispatch({
+                    type: ActionTypes.LOGIN,
+                    payload: json,
+                });
+            case 403:
+                AppToaster.show({
+                    message: 'Sorry, this username is already taken. Please try a different username.',
+                    intent: Intent.WARNING,
+                });
+                return dispatch({ type: ActionTypes.FAILED_SIGNUP });
+            default:
+                AppToaster.show({
+                    message: 'Error occured while signing up. Please try again.',
+                    intent: Intent.DANGER,
+                });
+                return dispatch({ type: ActionTypes.FAILED_SIGNUP });
+        }
+    }
+}
+
 export function logIn(details) {
     const { email, username, password, signup } = details;
     const loginDetails = { username, password };
     const signupDetails = { email, username, password };
 
     if (signup) {
-        return async dispatch => {
-            dispatch({ type: ActionTypes.REQUESTED_SIGNUP });
-            const response = await AppApi.signUp(signupDetails);
-            
-            switch (response.status) {
-                case 200:
-                    const json = await response.json();
-                    AppToaster.show({
-                        message: `Welcome to Workflow Streamer, ${username}!`,
-                        intent: Intent.SUCCESS,
-                    }); 
-                    dispatch({ type: ActionTypes.SIGNUP })
-                    return dispatch({
-                        type: ActionTypes.LOGIN,
-                        payload: json,
-                    });
-                case 403:
-                    AppToaster.show({
-                        message: 'Sorry, this username is already taken. Please try a different username.',
-                        intent: Intent.WARNING,
-                    });
-                    return dispatch({ type: ActionTypes.FAILED_SIGNUP });
-                default:
-                    AppToaster.show({
-                        message: 'Error occured while signing up. Please try again.',
-                        intent: Intent.DANGER,
-                    });
-                    return dispatch({ type: ActionTypes.FAILED_SIGNUP });
-            }
-        };
+        return signUp(signupDetails);
     }
 
     return async dispatch => {
         dispatch({ type: ActionTypes.REQUESTED_LOGIN });
         const response = await AppApi.logIn(loginDetails);
         
-        if (response.status === 200) {
-            const json = await response.json(); 
-            return dispatch({
-                type: ActionTypes.LOGIN,
-                payload: json,
-            });
-        } else {
-            AppToaster.show({
-                message: 'Error occured while loggin in. Please try again.',
-                intent: Intent.DANGER,
-            });
-            return dispatch({ type: ActionTypes.FAILED_LOGIN });
+        switch (response.status) {
+            case 200:
+                const json = await response.json(); 
+                return dispatch({
+                    type: ActionTypes.LOGIN,
+                    payload: json,
+                });
+            case 404:
+                AppToaster.show({
+                    message: 'Username and password do not match. Please try again.',
+                    intent: Intent.WARNING,
+                });
+                return dispatch({ type: ActionTypes.FAILED_LOGIN });
+            default:
+                AppToaster.show({
+                    message: 'Error occured while loggin in. Please try again.',
+                    intent: Intent.DANGER,
+                });
+                return dispatch({ type: ActionTypes.FAILED_LOGIN });
         }
     };
 }

@@ -12,7 +12,7 @@ class Page extends PureComponent {
         this.toggleOverlay = this.toggleOverlay.bind(this);
         this.setSelectedProject = this.setSelectedProject.bind(this);
         this.state = {
-            isOpen: true,
+            isOpen: false,
         };
     }
 

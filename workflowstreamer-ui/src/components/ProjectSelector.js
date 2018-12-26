@@ -25,6 +25,23 @@ class ProjectSelector extends PureComponent {
         this.props.getProjects();
     }
 
+    componentWillReceiveProps(newProps) {
+        const { allowAll, projects } = newProps;
+        
+        if (!allowAll && projects && projects.length > 0) {
+            this.setState({ selectedItem: projects[0] });
+        }
+    }
+
+    componentDidUpdate() {
+        const { selectedItem } = this.state;
+        const { allowAll } = this.props;
+        
+        if (!allowAll) {
+            this.props.onSelect(selectedItem);
+        }
+    }
+
     renderItem(project, { handleClick }) {
         const { projectId, name, description } = project;
         const { selectedItem } = this.state;
@@ -52,7 +69,7 @@ class ProjectSelector extends PureComponent {
     }
 
     render() {
-        const { allowAll, projects } = this.props;
+        const { allowAll, projects, minimal } = this.props;
         const { selectedItem } = this.state;
         let projectsToShow = projects;
 
@@ -62,8 +79,6 @@ class ProjectSelector extends PureComponent {
 
         if (allowAll) {
             projectsToShow = [allProjectsObj, ...projects];
-        } else {
-            this.setState({ selectedItem: projects[0] });
         }
 
         return (
@@ -75,7 +90,7 @@ class ProjectSelector extends PureComponent {
                 filterable={true}
                 noResults={<MenuItem disabled={true} text="No results." />}
             >
-                <Button minimal={true} rightIcon="caret-down" text={selectedItem && selectedItem.name} />
+                <Button minimal={minimal} rightIcon="caret-down" text={selectedItem && selectedItem.name} />
             </Select>
         );
     }
@@ -83,12 +98,14 @@ class ProjectSelector extends PureComponent {
 
 ProjectSelector.defaultProps = {
     allowAll: false,
+    minimal: true,
 };
 
 ProjectSelector.propTypes = {
     getProjects: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
     allowAll: PropTypes.bool,
+    minimal: PropTypes.bool,
 }
 
 function mapStateToProps(state) {
