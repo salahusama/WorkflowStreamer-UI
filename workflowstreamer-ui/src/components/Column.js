@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Tag, Intent } from "@blueprintjs/core";
+import { Tag, Intent } from "@blueprintjs/core";
+import Task from './Task';
 
 function Column({ tasks, columnName, noBorder }) {
     let style = noBorder ? { border: 'none' } : {};
@@ -13,14 +14,7 @@ function Column({ tasks, columnName, noBorder }) {
                 </div>
             </div>
             {tasks.map((task, index) => (
-                <Card
-                    key={index}
-                    interactive={true}
-                    className="task-item"
-                >
-                    <h3>{task.title}</h3>
-                    <p>{task.description}</p>
-                </Card>
+                <Task key={index} task={task} />
             ))}
         </div>
     );
