@@ -19,6 +19,11 @@ export default function auth(state = {}, action) {
                 status: Status.COMPLETED,
                 user: action.payload,
             };
+        case ActionTypes.LOGOUT:
+            return {
+                ...state,
+                user: null,
+            };
         default:
             return state;
     }

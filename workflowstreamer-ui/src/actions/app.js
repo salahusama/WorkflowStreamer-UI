@@ -18,7 +18,7 @@ function signUp(signupDetails) {
                 AppToaster.show({
                     message: `Welcome to Workflow Streamer, ${signupDetails.username}!`,
                     intent: Intent.SUCCESS,
-                }); 
+                });
                 dispatch({ type: ActionTypes.SIGNUP })
                 return dispatch({
                     type: ActionTypes.LOGIN,
@@ -73,6 +73,18 @@ export function logIn(details) {
                 });
                 return dispatch({ type: ActionTypes.FAILED_LOGIN });
         }
+    };
+}
+
+export function logout() {
+    return dispatch => {
+        AppToaster.show({
+            message: 'You have been logged out.',
+            intent: Intent.WARNING,
+        });
+        return dispatch({
+            type: ActionTypes.LOGOUT,
+        })
     };
 }
 

@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navbar, Button, Alignment, Icon, Tooltip, Position, Overlay } from '@blueprintjs/core';
+import { Navbar, Button, Alignment, Tooltip, Position, Overlay } from '@blueprintjs/core';
 import Tasks from './Tasks';
 import NewTaskForm from './NewTaskForm';
 import ProjectSelector from './ProjectSelector';
 import { updateSelectedProject } from '../actions/app';
+import UserMenu from './UserMenu';
+
 class Page extends PureComponent {
     constructor(props) {
         super(props);
@@ -51,7 +53,7 @@ class Page extends PureComponent {
                     </Navbar.Group>
 
                     <Navbar.Group align={Alignment.RIGHT}>
-                        <Button minimal={true}><Icon icon="user" iconSize={20}></Icon></Button>
+                        <UserMenu />
                     </Navbar.Group>
                 </Navbar>
 
