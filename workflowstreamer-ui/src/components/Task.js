@@ -27,8 +27,7 @@ class Task extends PureComponent {
                     className="task-item"
                     onClick={this.toggleOverlay}
                 >
-                    <h3>{title}</h3>
-                    <p>{description}</p>
+                    <div>{title}</div>
                 </Card>
                 <Overlay
                     className="mid-overlay"
@@ -39,7 +38,6 @@ class Task extends PureComponent {
                     <Card
                         className="overlay-task"
                         interactive={true}
-                        onClick={this.toggleOverlay}
                     >
                         <h3>{title}</h3>
                         <p>{description}</p>
