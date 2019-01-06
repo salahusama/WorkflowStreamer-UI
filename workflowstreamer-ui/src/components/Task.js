@@ -61,10 +61,6 @@ Task.propTypes = {
     projects: PropTypes.array.isRequired,
 };
 
-function mapStateToProps(state) {
-    return {
-        projects: state.projects.projects,
-    };
-}
-
-export default connect(mapStateToProps)(Task);
+export default connect(state => ({
+    projects: state.projects.projects,
+}))(Task);
