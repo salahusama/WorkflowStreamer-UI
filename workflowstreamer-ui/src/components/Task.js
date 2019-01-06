@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Card, Overlay } from "@blueprintjs/core";
 
 class Task extends PureComponent {
@@ -16,8 +17,14 @@ class Task extends PureComponent {
         this.setState({ isOpen: !isOpen });
     }
 
+    getProjectName(id) {
+        const { projects } = this.props;
+        const project = projects.find(({projectId}) => projectId === id);
+        return project && project.name;
+    }
+
     render() {
-        const { title, description } = this.props.task;
+        const { title, description, projectId } = this.props.task;
         const { isOpen } = this.state;
 
         return (
@@ -28,6 +35,7 @@ class Task extends PureComponent {
                     onClick={this.toggleOverlay}
                 >
                     <div>{title}</div>
+                    <div className="task-project-name">{this.getProjectName(projectId)}</div>
                 </Card>
                 <Overlay
                     className="mid-overlay"
@@ -50,6 +58,9 @@ class Task extends PureComponent {
 
 Task.propTypes = {
     task: PropTypes.object.isRequired,
+    projects: PropTypes.array.isRequired,
 };
 
-export default Task;
+export default connect(state => ({
+    projects: state.projects.projects,
+}))(Task);
