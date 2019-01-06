@@ -22,6 +22,7 @@
 
 .task-item {
     margin-top: 10px;
+    position: relative;
 }
 
 .new-task-stage {
@@ -34,4 +35,12 @@
 
 .overlay-task {
     width: inherit;
+}
+
+.task-project-name {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    font-size: smaller;
+    font-style: italic;
 }

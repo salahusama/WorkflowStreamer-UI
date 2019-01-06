@@ -21,12 +21,12 @@ class LoginForm extends PureComponent {
         }
     }
 
-    // componentDidMount() {
-    //     this.props.onSubmit({
-    //         username: 'tester',
-    //         password: 'pass',
-    //     });
-    // }
+    componentDidMount() {
+        this.props.onSubmit({
+            username: 'tester',
+            password: 'pass',
+        });
+    }
 
     componentWillUnmount() {
         AppToaster.show({
