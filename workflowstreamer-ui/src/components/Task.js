@@ -33,6 +33,7 @@ class Task extends PureComponent {
                     interactive={true}
                     className="task-item"
                     onClick={this.toggleOverlay}
+                    draggable
                 >
                     <div>{title}</div>
                     <div className="task-project-name">{this.getProjectName(projectId)}</div>
