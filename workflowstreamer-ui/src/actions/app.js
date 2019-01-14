@@ -77,15 +77,12 @@ export function logIn(details) {
 }
 
 export function logout() {
-    return dispatch => {
-        AppToaster.show({
-            message: 'You have been logged out.',
-            intent: Intent.WARNING,
-        });
-        return dispatch({
-            type: ActionTypes.LOGOUT,
-        })
-    };
+    AppToaster.show({
+        message: 'You have been logged out.',
+        intent: Intent.WARNING,
+    });
+
+    return { type: ActionTypes.LOGOUT };
 }
 
 export function getTasks() {
@@ -159,10 +156,8 @@ export function getProjects() {
 }
 
 export function updateSelectedProject(project) {
-    return dispatch => {
-        return dispatch({
-            type: ActionTypes.UPDATED_SELECTED_PROJECT,
-            payload: project,
-        })
+    return {
+        type: ActionTypes.UPDATED_SELECTED_PROJECT,
+        payload: project,
     };
 }

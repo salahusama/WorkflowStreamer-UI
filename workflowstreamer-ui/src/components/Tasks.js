@@ -2,8 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getTasks } from '../actions/app';
-import { getUserStages } from '../actions/app';
+import { getTasks, getUserStages } from '../actions/app';
 import Column from './Column';
 import { Spinner, Intent, NonIdealState } from '@blueprintjs/core';
 
@@ -60,6 +59,7 @@ Tasks.propTypes = {
     getUserStages: PropTypes.func.isRequired,
     tasks: PropTypes.array,
     userStages: PropTypes.array,
+    selectedProject: PropTypes.object,
 }
 
 function mapStateToProps(state) {
