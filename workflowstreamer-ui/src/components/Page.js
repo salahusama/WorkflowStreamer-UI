@@ -7,6 +7,7 @@ import NewTaskForm from './NewTaskForm';
 import ProjectSelector from './ProjectSelector';
 import { updateSelectedProject } from '../actions/app';
 import UserMenu from './UserMenu';
+import ProjectScreenOpener from './ProjectScreenOpener';
 
 class Page extends PureComponent {
     constructor(props) {
@@ -39,7 +40,11 @@ class Page extends PureComponent {
                         <Navbar.Divider />
                         <ProjectSelector onSelect={this.setSelectedProject} allowAll={true} />
                         <Navbar.Divider />
-                        <Tooltip content="New Task" position={Position.RIGHT}>
+                        <Tooltip content="Project Screen" position={Position.BOTTOM}>
+                            <ProjectScreenOpener />
+                        </Tooltip>
+                        <Navbar.Divider />
+                        <Tooltip content="New Task" position={Position.BOTTOM}>
                             <Button minimal={true} rightIcon="insert" onClick={this.toggleOverlay} />
                         </Tooltip>
                         <Overlay

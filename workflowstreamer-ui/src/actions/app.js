@@ -125,6 +125,35 @@ export function addTask(taskDetails) {
     };
 }
 
+export function addProject(projectDetails) {
+    return async (dispatch, getState) => {
+        const newProject = {
+            ...projectDetails,
+            creatorId: getState().auth.user.userId,
+        };
+        const response = await ProjectsApi.addProject(newProject);
+        
+        if (response.status === 200) {
+            const json = await response.json(); 
+            AppToaster.show({
+                message: 'Project added successfully.',
+                intent: Intent.SUCCESS,
+            });
+            return dispatch({
+                type: ActionTypes.ADDED_PROJECT,
+                payload: json,
+            });
+        } else {
+            AppToaster.show({
+                message: 'Error occured while adding new project. Please try again.',
+                intent: Intent.DANGER,
+            });
+            return dispatch({ type: ActionTypes.FAILED_PROJECT_ADITION });
+        }
+    };
+}
+
+
 export function getUserStages() {
     return async (dispatch, getState) => {
         const { userId } = getState().auth.user;

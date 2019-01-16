@@ -7,7 +7,12 @@ export default function projects(state = {}, action) {
                 ...state,
                 projects: action.payload,
             };
-            case ActionTypes.UPDATED_SELECTED_PROJECT:
+        case ActionTypes.ADDED_PROJECT:
+            return {
+                ...state,
+                projects: state.projects.concat(action.payload),
+            };
+        case ActionTypes.UPDATED_SELECTED_PROJECT:
             return {
                 ...state,
                 selectedProject: action.payload,
