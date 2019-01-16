@@ -97,7 +97,7 @@ class NewTaskForm extends PureComponent {
                     <FormGroup label="Add a New Task">
                         <InputGroup onChange={this.handleTitleChange} large={true} type="text" placeholder="Title" style={{ marginBottom: '10px' }} required />
                         <TextArea onChange={this.handleDescriptionChange} large={true} fill={true} type="text" placeholder="Description" style={{ marginBottom: '10px' }} />
-                        <ProjectSelector onSelect={this.handleProjectChange} minimal={false} />
+                        <ProjectSelector onSelect={this.handleProjectChange} minimal={false} filterable={false} />
                         <StageSelector onSelect={this.handleStageChange} className="new-task-stage" />
                         <br />
                         <Button type="submit" intent={Intent.SUCCESS} className="new-task-submit">Add Task</Button>

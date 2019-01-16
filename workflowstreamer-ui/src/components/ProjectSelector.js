@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button, MenuItem } from '@blueprintjs/core';
+import { Button, MenuItem, PopoverInteractionKind } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { getProjects } from '../actions/app';
+import ProjectScreenOpener from './ProjectScreenOpener';
 
 const allProjectsObj = {
     projectId: 0,
@@ -69,7 +70,7 @@ class ProjectSelector extends PureComponent {
     }
 
     render() {
-        const { allowAll, projects, minimal } = this.props;
+        const { allowAll, projects, minimal, filterable } = this.props;
         const { selectedItem } = this.state;
         let projectsToShow = projects;
 
@@ -87,8 +88,9 @@ class ProjectSelector extends PureComponent {
                 itemPredicate={this.itemPredicate}
                 itemRenderer={this.renderItem}
                 onItemSelect={this.handleClick}
-                filterable={true}
-                noResults={<MenuItem disabled={true} text="No results." />}
+                filterable={filterable}
+                noResults={<ProjectScreenOpener text="Open Projects Menu" />}
+                popoverProps={{ interactionKind: PopoverInteractionKind.CLICK_TARGET_ONLY }}
             >
                 <Button minimal={minimal} rightIcon="caret-down" text={selectedItem && selectedItem.name} />
             </Select>
@@ -99,6 +101,7 @@ class ProjectSelector extends PureComponent {
 ProjectSelector.defaultProps = {
     allowAll: false,
     minimal: true,
+    filterable: true,
 };
 
 ProjectSelector.propTypes = {
@@ -106,6 +109,7 @@ ProjectSelector.propTypes = {
     onSelect: PropTypes.func.isRequired,
     allowAll: PropTypes.bool,
     minimal: PropTypes.bool,
+    filterable: PropTypes.bool,
 }
 
 function mapStateToProps(state) {
