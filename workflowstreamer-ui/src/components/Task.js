@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Card, Overlay } from "@blueprintjs/core";
+import TaskOverlay from './TaskOverlay';
 
 class Task extends PureComponent {
     constructor(props) {
@@ -24,7 +25,7 @@ class Task extends PureComponent {
     }
 
     render() {
-        const { title, description, projectId } = this.props.task;
+        const { task, task: { title, projectId } } = this.props;
         const { isOpen } = this.state;
 
         return (
@@ -44,13 +45,7 @@ class Task extends PureComponent {
                     isOpen={isOpen}
                     onClose={this.toggleOverlay}
                 >
-                    <Card
-                        className="overlay-task"
-                        interactive={true}
-                    >
-                        <h3>{title}</h3>
-                        <p>{description}</p>
-                    </Card>
+                    <TaskOverlay task={task} />
                 </Overlay>
             </div>
         );
