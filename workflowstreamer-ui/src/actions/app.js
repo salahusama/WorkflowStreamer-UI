@@ -5,6 +5,7 @@ import * as UsersApi from '../api/user';
 import * as TasksApi from '../api/tasks';
 import * as ProjectsApi from '../api/projects';
 import AppToaster from '../utils/AppToaster';
+import { removeNull } from '../utils/ObjectUtils';
 
 function signUp(signupDetails) {
     return async dispatch => {
@@ -121,6 +122,38 @@ export function addTask(taskDetails) {
                 intent: Intent.DANGER,
             });
             return dispatch({ type: ActionTypes.FAILED_TASK_ADITION });
+        }
+    };
+}
+
+export function updateTask(updatedTask) {
+    const updatedDetails = removeNull(updatedTask);
+    return async (dispatch) => {
+        const response = await TasksApi.updateTask(updatedDetails);
+        
+        switch(response.status) {
+            case 200:
+                const json = await response.json(); 
+                AppToaster.show({
+                    message: 'Task updated successfully.',
+                    intent: Intent.SUCCESS,
+                });
+                return dispatch({
+                    type: ActionTypes.UPDATED_TASK,
+                    payload: json,
+                });
+            case 304:
+                AppToaster.show({
+                    message: 'Hmm... The task was not updated.',
+                    intent: Intent.WARNING,
+                });
+                return dispatch({ type: ActionTypes.FAILED_TASK_UPDATE });
+            default:
+                AppToaster.show({
+                    message: 'Error occured while adding new task. Please try again.',
+                    intent: Intent.DANGER,
+                });
+                return dispatch({ type: ActionTypes.FAILED_TASK_UPDATE });
         }
     };
 }

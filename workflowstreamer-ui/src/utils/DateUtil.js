@@ -4,8 +4,7 @@ export function getDateString(date) {
     return new Date(date).toDateString()
 }
 
-export function getIntentBasedOnDate(value) {
-    const dueDate = new Date(value);
+export function getIntentBasedOnDate(dueDate) {
     const today = new Date().setHours(0, 0, 0, 0);
     const dayDiff = (dueDate - today) / (1000 * 3600 * 24);
 
