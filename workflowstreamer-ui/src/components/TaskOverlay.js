@@ -41,6 +41,7 @@ class TaskOverlay extends PureComponent {
 
     handleDateChange(newDueDate) {
         const { form } = this.state;
+        this.toggleDatePicker();
         this.setState({
             form: {
                 ...form,
@@ -99,7 +100,14 @@ class TaskOverlay extends PureComponent {
                 </Popover>
 
                 {isTaskEdited && (
-                    <Button icon="edit" onClick={this.updateTask} intent={Intent.PRIMARY} />
+                    <Button
+                        icon="edit"
+                        onClick={this.updateTask}
+                        intent={Intent.NONE}
+                        style={{ right: '20px', position: 'absolute' }}
+                    >
+                        Save
+                    </Button>
                 )}
             </Card>
         );
