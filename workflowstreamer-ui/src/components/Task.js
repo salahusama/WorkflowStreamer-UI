@@ -24,7 +24,7 @@ class Task extends PureComponent {
         return project && project.name;
     }
 
-    setupDrag(e, taskId) {
+    dragTask(e, taskId) {
         e.dataTransfer.setData("taskId", taskId);
     }
 
