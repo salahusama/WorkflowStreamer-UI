@@ -24,8 +24,12 @@ class Task extends PureComponent {
         return project && project.name;
     }
 
+    setupDrag(e, taskId) {
+        e.dataTransfer.setData("taskId", taskId);
+    }
+
     render() {
-        const { task, task: { title, projectId } } = this.props;
+        const { task, task: { taskId, title, projectId } } = this.props;
         const { isOpen } = this.state;
 
         return (
@@ -35,6 +39,7 @@ class Task extends PureComponent {
                     className="task-item"
                     onClick={this.toggleOverlay}
                     draggable
+                    onDragStart={(e) => this.setupDrag(e, taskId)}
                 >
                     <div>{title}</div>
                     <div className="task-project-name">{this.getProjectName(projectId)}</div>
