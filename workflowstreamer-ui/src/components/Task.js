@@ -39,7 +39,7 @@ class Task extends PureComponent {
                     className="task-item"
                     onClick={this.toggleOverlay}
                     draggable
-                    onDragStart={(e) => this.setupDrag(e, taskId)}
+                    onDragStart={(e) => this.dragTask(e, taskId)}
                 >
                     <div>{title}</div>
                     <div className="task-project-name">{this.getProjectName(projectId)}</div>
