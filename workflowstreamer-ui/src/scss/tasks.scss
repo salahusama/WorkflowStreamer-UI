@@ -1,7 +1,9 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 .tasks-container {
-    max-height: calc(100vh - #{$pt-navbar-height} - 10px);
+    --height: calc(100vh - #{$pt-navbar-height} - 10px);
+    max-height: var(--height);
+    height: var(--height);
     padding-right: 20px;
     display: flex;
     flex-direction: row;
