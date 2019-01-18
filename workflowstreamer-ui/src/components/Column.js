@@ -14,7 +14,6 @@ class Column extends PureComponent {
     updateStage(e) {
         const { columnName } = this.props;
         const taskId = e.dataTransfer.getData("taskId");
-        console.log(taskId, columnName);
         this.props.updateTask({ taskId, stage: columnName });
     }
 
