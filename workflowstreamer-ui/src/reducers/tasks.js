@@ -1,11 +1,13 @@
 import ActionTypes from '../constants/actionTypes';
 
-export default function tasks(state = [], action) {
-    switch (action.type) {
+export default function tasks(state = [], { type, payload }) {
+    switch (type) {
         case ActionTypes.RECIEVED_TASKS:
-            return action.payload;
+            return payload;
         case ActionTypes.ADDED_TASK:
-            return state.concat(action.payload);
+            return state.concat(payload);
+        case ActionTypes.UPDATED_TASK:
+            return state.filter(task => task.taskId !== payload.taskId).concat(payload);
         default:
             return state;
     }
