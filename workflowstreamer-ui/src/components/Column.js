@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Tag, Intent } from "@blueprintjs/core";
 import Task from './Task';
+import { updateTask } from '../actions/app';
 
-function Column({ tasks, columnName, noBorder }) {
-    let style = noBorder ? { border: 'none' } : {};
+class Column extends PureComponent {
+    constructor(props) {
+        super(props);
+        this.updateStage = this.updateStage.bind(this);
+    }
 
-    return (
-        <div className="tasks-column" style={style}>
-            <div className="flex-col">
-                <div className="flex-row">
-                    <Tag large={true} round={true} intent={Intent.PRIMARY}>{columnName}</Tag>
+    updateStage(e) {
+        const { columnName } = this.props;
+        const taskId = e.dataTransfer.getData("taskId");
+        console.log(taskId, columnName);
+        this.props.updateTask({ taskId, stage: columnName });
+    }
+
+    render() {
+        const { tasks, columnName, noBorder } = this.props;
+        let style = noBorder ? { border: 'none' } : {};
+
+        return (
+            <div
+                className="tasks-column"
+                style={style}
+                onDrop={this.updateStage}
+                onDragOver={(e) => e.preventDefault()} // Allows drag & drop
+            >
+                <div className="flex-col">
+                    <div className="flex-row">
+                        <Tag large={true} round={true} intent={Intent.PRIMARY}>{columnName}</Tag>
+                    </div>
                 </div>
+                {tasks.map((task, index) => (
+                    <Task key={index} task={task} />
+                ))}
             </div>
-            {tasks.map((task, index) => (
-                <Task key={index} task={task} />
-            ))}
-        </div>
-    );
+        );
+    }
 }
 
 Column.defaultProps = {
@@ -30,4 +52,8 @@ Column.propTypes = {
     noBorder: PropTypes.bool,
 };
 
-export default Column;
+const mapDispatchToProps = dispatch => ({
+    updateTask: (details) => dispatch(updateTask(details)),
+});
+
+export default connect(null, mapDispatchToProps)(Column);
