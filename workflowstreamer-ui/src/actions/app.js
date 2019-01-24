@@ -6,6 +6,8 @@ import * as TasksApi from '../api/tasks';
 import * as ProjectsApi from '../api/projects';
 import AppToaster from '../utils/AppToaster';
 import { removeNull } from '../utils/ObjectUtils';
+import Session from '../constants/session';
+import { getFromSession, updateSessionCookie, removeSessionCookie } from '../utils/SessionUtil';
 
 function signUp(signupDetails) {
     return async dispatch => {
@@ -57,6 +59,11 @@ export function logIn(details) {
         switch (response.status) {
             case 200:
                 const json = await response.json(); 
+                updateSessionCookie(json.userId);
+                AppToaster.show({
+                    message: "Login Successful",
+                    intent: Intent.SUCCESS,
+                });
                 return dispatch({
                     type: ActionTypes.LOGIN,
                     payload: json,
@@ -78,6 +85,7 @@ export function logIn(details) {
 }
 
 export function logout() {
+    removeSessionCookie();
     AppToaster.show({
         message: 'You have been logged out.',
         intent: Intent.WARNING,
@@ -221,5 +229,29 @@ export function updateSelectedProject(project) {
     return {
         type: ActionTypes.UPDATED_SELECTED_PROJECT,
         payload: project,
+    };
+}
+
+export function restoreSession() {
+    const userId = getFromSession(Session.USER_ID);
+
+    if (!userId) {
+        return { type: ActionTypes.NO_SESSION };
+    }
+
+    return async (dispatch) => {
+        return UsersApi.getUserById(userId)
+            .then(response => response.json())
+            .then(json => {
+                updateSessionCookie(json.userId);
+                AppToaster.show({
+                    message: `Welcome back, ${json.username}`,
+                    intent: Intent.SUCCESS,
+                });
+                dispatch({
+                    type: ActionTypes.LOGIN,
+                    payload: json,
+                });
+            });
     };
 }
