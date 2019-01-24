@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormGroup, InputGroup, Button, Intent } from "@blueprintjs/core";
-import AppToaster from '../utils/AppToaster';
 import Status from '../constants/status';
 
 class LoginForm extends PureComponent {
@@ -19,20 +18,6 @@ class LoginForm extends PureComponent {
                 signup: false,
             }
         }
-    }
-
-    // componentDidMount() {
-    //     this.props.onSubmit({
-    //         username: 'tester',
-    //         password: 'pass',
-    //     });
-    // }
-
-    componentWillUnmount() {
-        AppToaster.show({
-            message: "Login Successful",
-            intent: Intent.SUCCESS,
-        })
     }
 
     handleFormChange(event, field) {

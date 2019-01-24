@@ -7,6 +7,7 @@
     "@blueprintjs/datetime": "^3.6.0",
     "@blueprintjs/select": "^3.4.0",
     "classnames": "^2.2.6",
+    "js-cookie": "^2.2.0",
     "node-sass": "^4.11.0",
     "primeicons": "^1.0.0",
     "primereact": "^2.0.0-rc.1",

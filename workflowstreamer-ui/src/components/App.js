@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
-import { logIn } from '../actions/app';
+import { logIn, restoreSession } from '../actions/app';
 import Page from './Page';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.submitLoginDetails = this.submitLoginDetails.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.restoreSession();
     }
 
     submitLoginDetails(details) {
@@ -28,6 +32,7 @@ class App extends Component {
 
 App.propTypes = {
     logIn: PropTypes.func.isRequired,
+    restoreSession: PropTypes.func.isRequired,
     user: PropTypes.object,
 }
 
@@ -40,6 +45,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         logIn: details => dispatch(logIn(details)),
+        restoreSession: () => dispatch(restoreSession()),
     };
 }
 
