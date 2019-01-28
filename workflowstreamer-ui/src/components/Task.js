@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, Overlay } from "@blueprintjs/core";
+import classNames from 'classnames';
+import { Card, Overlay, Elevation } from "@blueprintjs/core";
 import TaskOverlay from './TaskOverlay';
 
 class Task extends PureComponent {
@@ -29,17 +30,22 @@ class Task extends PureComponent {
     }
 
     render() {
-        const { task, task: { taskId, title, projectId } } = this.props;
+        const { task, task: { taskId, title, projectId, isRecommended } } = this.props;
         const { isOpen } = this.state;
+        const taskClasses = classNames({
+            'task-item': true,
+            'recommended-task': isRecommended,
+        });
 
         return (
             <div>
                 <Card
                     interactive={true}
-                    className="task-item"
+                    className={taskClasses}
                     onClick={this.toggleOverlay}
                     draggable
                     onDragStart={(e) => this.dragTask(e, taskId)}
+                    elevation={Elevation.ONE}
                 >
                     <div>{title}</div>
                     <div className="task-project-name">{this.getProjectName(projectId)}</div>
