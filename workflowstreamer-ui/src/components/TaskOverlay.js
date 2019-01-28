@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import { Card, InputGroup, TextArea, Button, Popover, Intent } from '@blueprintjs/core';
 import { DatePicker } from '@blueprintjs/datetime';
 import { getDateString, getIntentBasedOnDate } from '../utils/DateUtil';
@@ -59,14 +60,18 @@ class TaskOverlay extends PureComponent {
     }
 
     render() {
-        const { task: { title, description, dueDate } } = this.props;
+        const { task: { title, description, dueDate, isRecommended } } = this.props;
         const { isOpen, form } = this.state;
         const selectedDueDate = new Date(form.dueDate || dueDate);
         const isTaskEdited = form.title || form.description || form.dueDate;
+        const taskClasses = classNames({
+            'overlay-task': true,
+            'recommended-task': isRecommended,
+        });
 
         return (
             <Card
-                className="overlay-task"
+                className={taskClasses}
                 interactive={true}
             >
                 <InputGroup
