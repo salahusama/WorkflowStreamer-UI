@@ -1,9 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Overlay } from '@blueprintjs/core';
-import ProjectScreen from './ProjectScreen';
 
-class ProjectScreenOpener extends PureComponent {
+class ScreenOpener extends PureComponent {
     constructor(props) {
         super(props);
         this.toggleOverlay = this.toggleOverlay.bind(this);
@@ -19,26 +18,29 @@ class ProjectScreenOpener extends PureComponent {
 
     render() {
         const { isOpen } = this.state;
-        const { text } = this.props;
+        const { btnText, icon, toggleOnSubmit, children } = this.props;
+        const childProps = toggleOnSubmit ? { onSubmit: this.toggleOverlay } : {};
 
         return (
             <div>
-                <Button fill={true} minimal={true} icon="projects" onClick={this.toggleOverlay}>{text}</Button>
+                <Button fill={true} minimal={true} icon={icon} onClick={this.toggleOverlay}>{btnText}</Button>
                 <Overlay
                     className="mid-overlay"
                     backdropClassName="overlay-backdrop"
                     isOpen={isOpen}
                     onClose={this.toggleOverlay}
                 >
-                    <ProjectScreen />
+                    {cloneElement(children, childProps)}
                 </Overlay>
             </div>
         );
     }
 }
 
-ProjectScreenOpener.propTypes = {
-    text: PropTypes.string,
+ScreenOpener.propTypes = {
+    btnText: PropTypes.string,
+    icon: PropTypes.string,
+    toggleOnSubmit: PropTypes.bool,
 };
 
-export default ProjectScreenOpener;
+export default ScreenOpener;

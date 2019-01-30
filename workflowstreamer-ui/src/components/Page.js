@@ -1,27 +1,20 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navbar, Button, Alignment, Tooltip, Position, Overlay } from '@blueprintjs/core';
+import { Navbar, Button, Alignment, Tooltip, Position } from '@blueprintjs/core';
 import Tasks from './Tasks';
 import NewTaskForm from './NewTaskForm';
 import ProjectSelector from './ProjectSelector';
 import { updateSelectedProject } from '../actions/app';
 import UserMenu from './UserMenu';
-import ProjectScreenOpener from './ProjectScreenOpener';
+import ScreenOpener from './ScreenOpener';
+import ProjectScreen from './ProjectScreen';
+import StageScreen from './StageScreen';
 
 class Page extends PureComponent {
     constructor(props) {
         super(props);
-        this.toggleOverlay = this.toggleOverlay.bind(this);
         this.setSelectedProject = this.setSelectedProject.bind(this);
-        this.state = {
-            isOpen: false,
-        };
-    }
-
-    toggleOverlay() {
-        const { isOpen } = this.state;
-        this.setState({ isOpen: !isOpen });
     }
 
     setSelectedProject(project) {
@@ -29,9 +22,6 @@ class Page extends PureComponent {
     }
 
     render() {
-        // const { user } = this.props;
-        const { isOpen } = this.state;
-
         return (
             <div>
                 <Navbar fixedToTop={true}>
@@ -41,20 +31,22 @@ class Page extends PureComponent {
                         <ProjectSelector onSelect={this.setSelectedProject} allowAll={true} />
                         <Navbar.Divider />
                         <Tooltip content="Project Screen" position={Position.BOTTOM}>
-                            <ProjectScreenOpener />
+                            <ScreenOpener icon="projects">
+                                <ProjectScreen />
+                            </ScreenOpener>
+                        </Tooltip>
+                        <Navbar.Divider />
+                        <Tooltip content="Stage Settings" position={Position.BOTTOM}>
+                            <ScreenOpener icon="exchange">
+                                <StageScreen />
+                            </ScreenOpener>
                         </Tooltip>
                         <Navbar.Divider />
                         <Tooltip content="New Task" position={Position.BOTTOM}>
-                            <Button minimal={true} rightIcon="insert" onClick={this.toggleOverlay} />
+                            <ScreenOpener icon="insert" toggleOnSubmit={true}>
+                                <NewTaskForm />
+                            </ScreenOpener>
                         </Tooltip>
-                        <Overlay
-                            className="mid-overlay"
-                            backdropClassName="overlay-backdrop"
-                            isOpen={isOpen}
-                            onClose={this.toggleOverlay}
-                        >
-                            <NewTaskForm onSubmit={this.toggleOverlay} />
-                        </Overlay>
                     </Navbar.Group>
 
                     <Navbar.Group align={Alignment.RIGHT}>

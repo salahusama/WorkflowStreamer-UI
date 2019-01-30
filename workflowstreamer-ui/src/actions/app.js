@@ -202,10 +202,12 @@ export function getUserStages() {
         const json = await response.json();
 
         if (response.status === 200) {
-            const stageNames = json.map(stage => (stage.stage));
+            const stages = json
+                .sort((a, b) => a.viewOrder - b.viewOrder)
+                .map(stage => (stage.stage));
             return dispatch({
                 type: ActionTypes.RECIEVED_STAGES,
-                payload: stageNames,
+                payload: stages,
             });
         } else {
             return dispatch({ type: ActionTypes.FAILED_STAGES });
