@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { Button, MenuItem, PopoverInteractionKind } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { getProjects } from '../actions/app';
-import ProjectScreenOpener from './ProjectScreenOpener';
+import ScreenOpener from './ScreenOpener';
+import ProjectScreen from './ProjectScreen';
 
 const allProjectsObj = {
     projectId: 0,
@@ -89,7 +90,7 @@ class ProjectSelector extends PureComponent {
                 itemRenderer={this.renderItem}
                 onItemSelect={this.handleClick}
                 filterable={filterable}
-                noResults={<ProjectScreenOpener text="Open Projects Menu" />}
+                noResults={<ScreenOpener btnText="Open Projects Menu" icon="projects"><ProjectScreen /></ScreenOpener>}
                 popoverProps={{ interactionKind: PopoverInteractionKind.CLICK_TARGET_ONLY }}
             >
                 <Button minimal={minimal} rightIcon="caret-down" text={selectedItem && selectedItem.name} />

@@ -28,8 +28,9 @@ class StageSelector extends PureComponent {
     }
 
     handleClick(stage) {
+        const { userStages } = this.props;
         this.setState({ selectedStage: stage });
-        this.props.onSelect(stage);
+        this.props.onSelect(stage, userStages.indexOf(stage) + 1);
     }
 
     itemPredicate(input, stage) {
