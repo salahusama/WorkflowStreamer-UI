@@ -5,7 +5,7 @@ import { applyMiddleware, compose, createStore } from 'redux';
 
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducers';
-import App from './components/App';
+import Router from './components/Router';
 
 import 'normalize.css/normalize.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
@@ -26,7 +26,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Router />
     </Provider>
     , document.getElementById('root')
 );
