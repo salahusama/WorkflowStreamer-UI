@@ -21,7 +21,7 @@ class Task extends PureComponent {
 
     getProjectName(id) {
         const { projects } = this.props;
-        const project = projects.find(({projectId}) => projectId === id);
+        const project = projects && projects.find(({projectId}) => projectId === id);
         return project && project.name;
     }
 
