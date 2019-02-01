@@ -1,7 +1,7 @@
 import { Intent } from '@blueprintjs/core';
 
 export function getDateString(date) {
-    return date ? new Date(date).toDateString() : null;
+    return date && new Date(date).toDateString();
 }
 
 export function getIntentBasedOnDate(dueDate) {
