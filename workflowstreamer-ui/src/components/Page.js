@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Navbar, Button, Alignment, Tooltip, Position } from '@blueprintjs/core';
+import { Navbar, Alignment, Tooltip, Position } from '@blueprintjs/core';
 import Tasks from './Tasks';
 import NewTaskForm from './NewTaskForm';
 import ProjectSelector from './ProjectSelector';
@@ -10,6 +10,7 @@ import UserMenu from './UserMenu';
 import ScreenOpener from './ScreenOpener';
 import ProjectScreen from './ProjectScreen';
 import StageScreen from './StageScreen';
+import MenuOpener from './MenuOpener';
 
 class Page extends PureComponent {
     constructor(props) {
@@ -26,7 +27,7 @@ class Page extends PureComponent {
             <div>
                 <Navbar fixedToTop={true}>
                     <Navbar.Group align={Alignment.LEFT}>
-                        <Button minimal={true} icon="menu" />
+                        <MenuOpener />
                         <Navbar.Divider />
                         <ProjectSelector onSelect={this.setSelectedProject} allowAll={true} />
                         <Navbar.Divider />

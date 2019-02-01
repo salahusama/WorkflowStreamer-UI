@@ -18,6 +18,7 @@ function signUp(signupDetails) {
         switch (response.status) {
             case 200:
                 const json = await response.json();
+                updateSessionCookie(json.userId);
                 AppToaster.show({
                     message: `Welcome to Workflow Streamer, ${signupDetails.username}!`,
                     intent: Intent.SUCCESS,

@@ -62,7 +62,7 @@ class TaskOverlay extends PureComponent {
     render() {
         const { task: { title, description, dueDate, isRecommended } } = this.props;
         const { isOpen, form } = this.state;
-        const selectedDueDate = new Date(form.dueDate || dueDate);
+        const selectedDueDate = dueDate || form.dueDate ? new Date(form.dueDate || dueDate) : null;
         const isTaskEdited = form.title || form.description || form.dueDate;
         const taskClasses = classNames({
             'overlay-task': true,
@@ -95,7 +95,7 @@ class TaskOverlay extends PureComponent {
 
                 <Popover isOpen={isOpen}>
                     <Button onClick={this.toggleDatePicker} intent={getIntentBasedOnDate(selectedDueDate)} >
-                        {`Due: ${getDateString(selectedDueDate)}`}
+                        {`Due: ${getDateString(selectedDueDate) || 'Not Set'}`}
                     </Button>
                     <DatePicker
                         value={selectedDueDate}
