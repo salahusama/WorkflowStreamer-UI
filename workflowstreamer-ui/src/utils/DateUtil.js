@@ -1,10 +1,14 @@
 import { Intent } from '@blueprintjs/core';
 
 export function getDateString(date) {
-    return new Date(date).toDateString()
+    return date ? new Date(date).toDateString() : null;
 }
 
 export function getIntentBasedOnDate(dueDate) {
+    if (!dueDate) {
+        return Intent.NONE;
+    }
+
     const today = new Date().setHours(0, 0, 0, 0);
     const dayDiff = (dueDate - today) / (1000 * 3600 * 24);
 

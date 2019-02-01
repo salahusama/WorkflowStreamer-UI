@@ -67,12 +67,20 @@ class NewTaskForm extends PureComponent {
     }
 
     addTask(e) {
-        const { projectId, stage } = this.state.form;
+        const { projectId, stage, description } = this.state.form;
         e.preventDefault();
 
         if (!projectId) {
             AppToaster.show({
                 message: 'Please select the project this task belongs to.',
+                intent: Intent.DANGER,
+            });
+            return;
+        }
+
+        if (!description) {
+            AppToaster.show({
+                message: 'Please add a description for this task. (Will be gone soon)',
                 intent: Intent.DANGER,
             });
             return;
