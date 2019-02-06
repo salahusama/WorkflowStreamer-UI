@@ -78,14 +78,6 @@ class NewTaskForm extends PureComponent {
             return;
         }
 
-        if (!description) {
-            AppToaster.show({
-                message: 'Please add a description for this task. (Will be gone soon)',
-                intent: Intent.DANGER,
-            });
-            return;
-        }
-
         if (!stage) {
             AppToaster.show({
                 message: 'Please select the stage this task is in.',
