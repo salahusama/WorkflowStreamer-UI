@@ -7,7 +7,6 @@ import { DatePicker, TimePrecision } from '@blueprintjs/datetime';
 import { getDateString, getIntentBasedOnDate } from '../utils/DateUtil';
 import { updateTask } from '../actions/app';
 import PriorityPicker from './PriorityPicker';
-// import EstimatedWorkPicker from './EstimatedWorkPicker';
 
 class TaskOverlay extends PureComponent {
     constructor(props) {
