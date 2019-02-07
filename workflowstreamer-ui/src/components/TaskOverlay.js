@@ -6,6 +6,7 @@ import { Card, InputGroup, TextArea, Button, Popover, Intent } from '@blueprintj
 import { DatePicker, TimePrecision } from '@blueprintjs/datetime';
 import { getDateString, getIntentBasedOnDate } from '../utils/DateUtil';
 import { updateTask } from '../actions/app';
+import PriorityPicker from './PriorityPicker';
 
 class TaskOverlay extends PureComponent {
     constructor(props) {
@@ -13,6 +14,7 @@ class TaskOverlay extends PureComponent {
         this.toggleDatePicker = this.toggleDatePicker.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.updateTask = this.updateTask.bind(this);
         this.state = {
             isOpen: false,
@@ -20,6 +22,7 @@ class TaskOverlay extends PureComponent {
                 title: null,
                 description: null,
                 dueDate: null,
+                priority: null,
             }
         };
     }
@@ -51,6 +54,16 @@ class TaskOverlay extends PureComponent {
         });
     }
 
+    handlePriorityChange(newPriority) {
+        const { form } = this.state;
+        this.setState({
+            form: {
+                ...form,
+                priority: newPriority,
+            }
+        });
+    }
+
     updateTask() {
         const { form } = this.state;
         this.props.updateTask({
@@ -60,10 +73,10 @@ class TaskOverlay extends PureComponent {
     }
 
     render() {
-        const { task: { title, description, dueDate, isRecommended } } = this.props;
+        const { task: { title, description, dueDate, priority, isRecommended } } = this.props;
         const { isOpen, form } = this.state;
         const selectedDueDate = dueDate || form.dueDate ? new Date(form.dueDate || dueDate) : null;
-        const isTaskEdited = form.title || form.description || form.dueDate;
+        const isTaskEdited = form.title || form.description || form.dueDate || form.priority;
         const taskClasses = classNames({
             'overlay-task': true,
             'recommended-task': isRecommended,
@@ -104,6 +117,8 @@ class TaskOverlay extends PureComponent {
                         timePrecision={TimePrecision}
                     />
                 </Popover>
+
+                <PriorityPicker initial={priority} onChange={this.handlePriorityChange} />
 
                 {isTaskEdited && (
                     <Button
