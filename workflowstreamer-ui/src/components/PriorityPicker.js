@@ -16,7 +16,7 @@ class PriorityPicker extends PureComponent {
 
     componentDidMount() {
         const { initial } = this.props;
-        const { selectedPriority } = this.props.this.state;
+        const { selectedPriority } = this.state;
         if (initial && !selectedPriority.value) {
             this.setState({
                 selectedPriority: Priority.find(priority => priority.value === initial)
@@ -30,9 +30,12 @@ class PriorityPicker extends PureComponent {
     }
 
     handleClick(priority) {
-        this.setState({ selectedPriority: priority })
+        const { selectedPriority } = this.state
         this.togglePopover()
-        this.props.onChange(priority.value)
+        if (priority.value !== selectedPriority.value) {
+            this.setState({ selectedPriority: priority })
+            this.props.onChange(priority.value)
+        }
     }
 
     render() {
