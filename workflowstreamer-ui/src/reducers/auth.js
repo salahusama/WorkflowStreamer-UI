@@ -3,11 +3,13 @@ import Status from '../constants/status';
 
 export default function auth(state = {}, action) {
     switch (action.type) {
+        case ActionTypes.REQUESTED_SIGNUP:
         case ActionTypes.REQUESTED_LOGIN:
             return {
                 ...state,
                 status: Status.PENDING,
             };
+        case ActionTypes.FAILED_SIGNUP:
         case ActionTypes.FAILED_LOGIN:
             return {
                 ...state,
@@ -16,12 +18,13 @@ export default function auth(state = {}, action) {
         case ActionTypes.LOGIN:
             return {
                 ...state,
-                status: Status.COMPLETED,
+                status: Status.SUCCESS,
                 user: action.payload,
             };
         case ActionTypes.LOGOUT:
             return {
                 ...state,
+                status: null,
                 user: null,
             };
         default:
