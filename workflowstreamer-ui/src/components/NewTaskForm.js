@@ -67,7 +67,7 @@ class NewTaskForm extends PureComponent {
     }
 
     addTask(e) {
-        const { projectId, stage, description } = this.state.form;
+        const { projectId, stage } = this.state.form;
         e.preventDefault();
 
         if (!projectId) {
