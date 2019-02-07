@@ -8,10 +8,7 @@ class PrivateRoute extends PureComponent {
         const { status, component, location, ...props } = this.props;
         
         if (status !== Status.SUCCESS) {
-            return <Redirect to={{
-                pathname: '/login',
-                from: location,
-            }} />
+            return <Redirect to={{ pathname: '/login', from: location }} />
         }
 
         return <Route component={component} {...props} />;
