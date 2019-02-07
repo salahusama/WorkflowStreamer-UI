@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { Card, InputGroup, TextArea, Button, Popover, Intent } from '@blueprintjs/core';
-import { DatePicker } from '@blueprintjs/datetime';
+import { DatePicker, TimePrecision } from '@blueprintjs/datetime';
 import { getDateString, getIntentBasedOnDate } from '../utils/DateUtil';
 import { updateTask } from '../actions/app';
 
@@ -101,6 +101,7 @@ class TaskOverlay extends PureComponent {
                         value={selectedDueDate}
                         showActionsBar={true}
                         onChange={this.handleDateChange}
+                        timePrecision={TimePrecision}
                     />
                 </Popover>
 
