@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormGroup, InputGroup, Button, Intent } from "@blueprintjs/core";
+import { logIn, restoreSession } from '../actions/app';
 import Status from '../constants/status';
 
-class LoginForm extends PureComponent {
+class LoginPage extends PureComponent {
     constructor(props) {
         super(props);
         this.logIn = this.logIn.bind(this);
@@ -18,6 +20,10 @@ class LoginForm extends PureComponent {
                 signup: false,
             }
         }
+    }
+
+    componentDidMount() {
+        this.props.restoreSession();
     }
 
     handleFormChange(event, field) {
@@ -43,14 +49,18 @@ class LoginForm extends PureComponent {
     logIn(e) {
         e.preventDefault();
         this.setState({ didSubmit: true });
-        this.props.onSubmit(this.state.form);
+        this.props.logIn(this.state.form);
     }
 
     render() {
-        const { status } = this.props;
+        const { status, location } = this.props;
         const { signup } = this.state.form;
         const isPending = status === Status.PENDING;
         const formAction = signup ? 'Sign Up' : 'Log In';
+
+        if (status === Status.SUCCESS) {
+            return <Redirect to={location.from || '/'} />
+        }
 
         return (
             <div className="flex-col" style={{ marginTop: '15vh' }}>
@@ -74,11 +84,19 @@ class LoginForm extends PureComponent {
     }
 }
 
-LoginForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+LoginPage.propTypes = {
+    logIn: PropTypes.func.isRequired,
+    restoreSession: PropTypes.func.isRequired,
     state: PropTypes.string,
 };
 
-export default connect(state => ({
+const mapStateToProps = state => ({
     status: state.auth.status,
-}))(LoginForm);
+})
+
+const mapDispatchToProps = dispatch => ({
+    logIn: details => dispatch(logIn(details)),
+    restoreSession: () => dispatch(restoreSession()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

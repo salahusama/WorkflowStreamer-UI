@@ -1,39 +1,69 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import LoginForm from './LoginForm';
-import { logIn, restoreSession } from '../actions/app';
-import Page from './Page';
+import { Navbar, Alignment, Tooltip, Position } from '@blueprintjs/core';
+import Tasks from './Tasks';
+import NewTaskForm from './NewTaskForm';
+import ProjectSelector from './ProjectSelector';
+import { updateSelectedProject } from '../actions/app';
+import UserMenu from './UserMenu';
+import ScreenOpener from './ScreenOpener';
+import ProjectScreen from './ProjectScreen';
+import StageScreen from './StageScreen';
+import MenuOpener from './MenuOpener';
 
-class App extends Component {
+class App extends PureComponent {
     constructor(props) {
         super(props);
-        this.submitLoginDetails = this.submitLoginDetails.bind(this);
+        this.setSelectedProject = this.setSelectedProject.bind(this);
     }
 
-    componentDidMount() {
-        this.props.restoreSession();
-    }
-
-    submitLoginDetails(details) {
-        this.props.logIn(details);
+    setSelectedProject(project) {
+        this.props.updateSelectedProject(project);
     }
 
     render() {
-        const { user } = this.props;
-
         return (
-            user
-            ? <Page />
-            : <LoginForm onSubmit={this.submitLoginDetails} />
+            <div>
+                <Navbar fixedToTop={true}>
+                    <Navbar.Group align={Alignment.LEFT}>
+                        <MenuOpener />
+                        <Navbar.Divider />
+                        <ProjectSelector onSelect={this.setSelectedProject} allowAll={true} />
+                        <Navbar.Divider />
+                        <Tooltip content="Project Screen" position={Position.BOTTOM}>
+                            <ScreenOpener icon="projects">
+                                <ProjectScreen />
+                            </ScreenOpener>
+                        </Tooltip>
+                        <Navbar.Divider />
+                        <Tooltip content="Stage Settings" position={Position.BOTTOM}>
+                            <ScreenOpener icon="exchange">
+                                <StageScreen />
+                            </ScreenOpener>
+                        </Tooltip>
+                        <Navbar.Divider />
+                        <Tooltip content="New Task" position={Position.BOTTOM}>
+                            <ScreenOpener icon="insert" toggleOnSubmit={true}>
+                                <NewTaskForm />
+                            </ScreenOpener>
+                        </Tooltip>
+                    </Navbar.Group>
+
+                    <Navbar.Group align={Alignment.RIGHT}>
+                        <UserMenu />
+                    </Navbar.Group>
+                </Navbar>
+
+                <Tasks />
+            </div>
         );
     }
 }
 
 App.propTypes = {
-    logIn: PropTypes.func.isRequired,
-    restoreSession: PropTypes.func.isRequired,
-    user: PropTypes.object,
+    user: PropTypes.object.isRequired,
+    updateSelectedProject: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -44,8 +74,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        logIn: details => dispatch(logIn(details)),
-        restoreSession: () => dispatch(restoreSession()),
+        updateSelectedProject: (project) => dispatch(updateSelectedProject(project)),
     };
 }
 

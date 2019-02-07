@@ -8,6 +8,7 @@ import App from '../components/App';
 const initialState = {
     auth: {},
     tasks: {},
+    projects: {},
 };
 const middleware = [ thunk ];
 const mockStore = configureStore(middleware);

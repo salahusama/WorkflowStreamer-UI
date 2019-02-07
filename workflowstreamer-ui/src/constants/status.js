@@ -1,5 +1,5 @@
 export default {
     PENDING: 'PENDING',
-    COMPLETED: 'COMPLETED',
+    SUCCESS: 'SUCCESS',
     FAILED: 'FAILED',
 };
