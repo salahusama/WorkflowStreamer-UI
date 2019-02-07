@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Tag, Intent } from "@blueprintjs/core";
 import Task from './Task';
 import { updateTask } from '../actions/app';
+import AppToaster from '../utils/AppToaster';
 
 class Column extends PureComponent {
     constructor(props) {
@@ -14,7 +15,21 @@ class Column extends PureComponent {
     updateStage(e) {
         const { columnName } = this.props;
         const taskId = e.dataTransfer.getData("taskId");
-        this.props.updateTask({ taskId, stage: columnName });
+        const oldColumn = e.dataTransfer.getData("oldColumn");
+        
+        // Prevent Tasks from updating when same column
+        if (oldColumn === columnName) {
+            AppToaster.show({
+                message: 'To change a task\'s stage, please drop it in a different column.',
+                intent: Intent.WARNING,
+            });
+            return;
+        }
+
+        this.props.updateTask({
+            taskId,
+            stage: columnName
+        });
     }
 
     render() {

@@ -25,12 +25,13 @@ class Task extends PureComponent {
         return project && project.name;
     }
 
-    dragTask(e, taskId) {
+    dragTask(e, taskId, stage) {
         e.dataTransfer.setData("taskId", taskId);
+        e.dataTransfer.setData("oldColumn", stage);
     }
 
     render() {
-        const { task, task: { taskId, title, projectId, isRecommended } } = this.props;
+        const { task, task: { taskId, title, projectId, isRecommended, stage } } = this.props;
         const { isOpen } = this.state;
         const taskClasses = classNames({
             'task-item': true,
@@ -44,7 +45,7 @@ class Task extends PureComponent {
                     className={taskClasses}
                     onClick={this.toggleOverlay}
                     draggable
-                    onDragStart={(e) => this.dragTask(e, taskId)}
+                    onDragStart={(e) => this.dragTask(e, taskId, stage)}
                     elevation={Elevation.ONE}
                 >
                     <div>{title}</div>
