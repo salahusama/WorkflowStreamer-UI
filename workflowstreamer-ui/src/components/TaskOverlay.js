@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import { Card, InputGroup, TextArea, Button, Popover, Intent } from '@blueprintjs/core';
+import { Card, InputGroup, TextArea, Button, Popover, Intent, NumericInput } from '@blueprintjs/core';
 import { DatePicker, TimePrecision } from '@blueprintjs/datetime';
 import { getDateString, getIntentBasedOnDate } from '../utils/DateUtil';
 import { updateTask } from '../actions/app';
@@ -14,7 +14,8 @@ class TaskOverlay extends PureComponent {
         this.toggleDatePicker = this.toggleDatePicker.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
-        this.handlePriorityChange = this.handlePriorityChange.bind(this);
+		this.handlePriorityChange = this.handlePriorityChange.bind(this);
+		this.handleEstimatedWorkChange = this.handleEstimatedWorkChange.bind(this);
         this.updateTask = this.updateTask.bind(this);
         this.state = {
             isOpen: false,
@@ -22,7 +23,8 @@ class TaskOverlay extends PureComponent {
                 title: null,
                 description: null,
                 dueDate: null,
-                priority: null,
+				priority: null,
+				estimatedWork: null,
             }
         };
     }
@@ -62,7 +64,17 @@ class TaskOverlay extends PureComponent {
                 priority: newPriority,
             }
         });
-    }
+	}
+	
+	handleEstimatedWorkChange(estimatedWork) {
+        const { form } = this.state;
+        this.setState({
+            form: {
+                ...form,
+                estimatedWork,
+            }
+        });
+	}
 
     updateTask() {
         const { form } = this.state;
@@ -73,10 +85,10 @@ class TaskOverlay extends PureComponent {
     }
 
     render() {
-        const { task: { title, description, dueDate, priority, isRecommended } } = this.props;
+        const { task: { title, description, dueDate, priority, estimatedWork, isRecommended } } = this.props;
         const { isOpen, form } = this.state;
         const selectedDueDate = dueDate || form.dueDate ? new Date(form.dueDate || dueDate) : null;
-        const isTaskEdited = form.title || form.description || form.dueDate || form.priority;
+        const isTaskEdited = form.title || form.description || form.dueDate || form.priority || form.estimatedWork;
         const taskClasses = classNames({
             'overlay-task': true,
             'recommended-task': isRecommended,
@@ -106,26 +118,38 @@ class TaskOverlay extends PureComponent {
                     style={{ marginBottom: '10px' }}
                 />
 
-                <Popover isOpen={isOpen}>
-                    <Button onClick={this.toggleDatePicker} intent={getIntentBasedOnDate(selectedDueDate)} >
-                        {`Due: ${getDateString(selectedDueDate) || 'Not Set'}`}
-                    </Button>
-                    <DatePicker
-                        value={selectedDueDate}
-                        showActionsBar={true}
-                        onChange={this.handleDateChange}
-                        timePrecision={TimePrecision}
-                    />
-                </Popover>
+				<div style={{ marginBottom: '10px' }}>
+					<Popover isOpen={isOpen}>
+						<Button onClick={this.toggleDatePicker} intent={getIntentBasedOnDate(selectedDueDate)} >
+							{`Due: ${getDateString(selectedDueDate) || 'Not Set'}`}
+						</Button>
+						<DatePicker
+							value={selectedDueDate}
+							showActionsBar={true}
+							onChange={this.handleDateChange}
+							timePrecision={TimePrecision}
+						/>
+					</Popover>
 
-                <PriorityPicker initial={priority} onChange={this.handlePriorityChange} />
+					<PriorityPicker initial={priority} onChange={this.handlePriorityChange} />
+				</div>
+
+				<NumericInput
+					name="estimatedWork"
+					value={form.estimatedWork || estimatedWork || null}
+					onValueChange={this.handleEstimatedWorkChange}
+					min={0}
+					max={100}
+					placeholder="Estimated Work"
+					style={{ width: '118px' }}
+				/>
 
                 {isTaskEdited && (
                     <Button
                         icon="edit"
                         onClick={this.updateTask}
                         intent={Intent.NONE}
-                        style={{ right: '20px', position: 'absolute' }}
+                        style={{ right: '10px', bottom: '10px', position: 'absolute' }}
                     >
                         Save
                     </Button>
