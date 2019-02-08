@@ -1,10 +1,12 @@
+import { getWorkflowStreamerBase } from '../utils/env';
+
 export function getUserProjects(userId) {
-    const url = `http://localhost/projects?userId=${userId}`;
+    const url = `${getWorkflowStreamerBase()}/projects?userId=${userId}`;
     return fetch(url);
 }
 
 export function addProject(newProject) {
-    const url = 'http://localhost/projects/project';
+    const url = `${getWorkflowStreamerBase()}/projects/project`;
     return fetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

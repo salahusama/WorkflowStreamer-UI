@@ -1,5 +1,7 @@
+import { getWorkflowStreamerBase } from '../utils/env';
+
 export function logIn({ username, password }) {
-    const url = 'http://localhost/users/user/login';
+    const url = `${getWorkflowStreamerBase()}/users/user/login`;
     return fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -11,7 +13,7 @@ export function logIn({ username, password }) {
 }
 
 export function signUp({ email, username, password }) {
-    const url = 'http://localhost/users/user';
+    const url = `${getWorkflowStreamerBase()}/users/user`;
     return fetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
