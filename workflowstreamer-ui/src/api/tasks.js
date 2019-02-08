@@ -1,10 +1,12 @@
+import { getWorkflowStreamerBase } from '../utils/env';
+
 export function getUserTasks(userId) {
-    const url = `http://localhost/tasks/user/${userId}`;
+    const url = `${getWorkflowStreamerBase()}/tasks/user/${userId}`;
     return fetch(url);
 }
 
 export function addTask({ creatorId, title, description, projectId, stage }) {
-    const url = 'http://localhost/tasks/task';
+    const url = `${getWorkflowStreamerBase()}/tasks/task`;
     return fetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -19,7 +21,7 @@ export function addTask({ creatorId, title, description, projectId, stage }) {
 }
 
 export function updateTask(updatedDetails) {
-    const url = 'http://localhost/tasks/task';
+    const url = `${getWorkflowStreamerBase()}/tasks/task`;
     return fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
