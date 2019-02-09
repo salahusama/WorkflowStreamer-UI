@@ -14,6 +14,15 @@ class StageSelector extends PureComponent {
         };
     }
 
+    componentDidMount() {
+        const { userStages } = this.props;
+        
+        if (userStages && userStages.length > 0) {
+            this.setState({ selectedStage: userStages[0] });
+            this.props.onSelect(userStages[0], userStages.indexOf(userStages[0]) + 1);
+        }
+    }
+
     renderItem(stage, { handleClick }) {
         const { selectedStage } = this.state;
 
