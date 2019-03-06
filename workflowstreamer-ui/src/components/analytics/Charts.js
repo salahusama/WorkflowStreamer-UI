@@ -1,10 +1,69 @@
 import React, { PureComponent, Fragment } from 'react';
-import { Navbar, Alignment } from '@blueprintjs/core';
-import UserMenu from './UserMenu';
-import MenuOpener from './MenuOpener';
+import PropTypes from 'prop-types';
+import { Bar, Line, Pie, Doughnut } from 'react-chartjs-2';
+import { getEventCountOverTime } from '../../utils/analytics';
+import { Card } from '@blueprintjs/core';
 
-import { Line, Bar } from 'react-chartjs-2';
+const style = {
+    maxWidth: '800px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '30px',
+};
 
+const options = {
+    maintainAspectRatio: true,
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+    }
+};
+
+class Charts extends PureComponent {
+    render() {
+        const { events } = this.props;
+        return (
+            <Fragment>
+                <Card interactive={true} style={style}>
+                    <div>
+                        <Bar data={getEventCountOverTime('task-interaction', 'created', events)} options={options} />
+                    </div>
+                </Card>
+
+                <Card interactive={true} style={style}>
+                    <div>
+                        <Line data={getEventCountOverTime('task-interaction', 'created', events)} options={options} />
+                    </div>
+                </Card>
+
+                <Card interactive={true} style={style}>
+                    <div>
+                        <Pie data={getEventCountOverTime('task-interaction', 'created', events)} options={options} />
+                    </div>
+                </Card>
+
+                <Card interactive={true} style={style}>
+                    <div>
+                        <Doughnut data={getEventCountOverTime('task-interaction', 'created', events)} options={options} />
+                    </div>
+                </Card>
+            </Fragment>
+        );
+    }
+}
+
+Charts.defaultProps = {
+    events: PropTypes.array.isRequired,
+};
+
+export default Charts;
+
+
+
+/*
 const barData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [{
@@ -77,60 +136,4 @@ const combinedLineData = {
         borderWidth: 1
     }],
 };
-
-const options = {
-    maintainAspectRatio: true,
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero:true
-            }
-        }]
-    }
-};
-
-const style = {
-    maxWidth: '600px',
-    marginLeft: 'auto',
-    marginRight: 'auto'
-};
-
-class Page extends PureComponent {
-    render() {
-        return (
-            <Fragment>
-                <Navbar fixedToTop={true}>
-                    <Navbar.Group align={Alignment.LEFT}>
-                        <MenuOpener />
-                    </Navbar.Group>
-                    <Navbar.Group align={Alignment.RIGHT}>
-                        <UserMenu />
-                    </Navbar.Group>
-                </Navbar>
-
-                <div style={style}>
-                    <Bar
-                        data={barData}
-                        options={options}
-                    />
-                </div>
-
-                <div style={{ ...style, marginTop: '30px' }}>
-                    <Line
-                        data={lineData}
-                        options={options}
-                    />
-                </div>
-
-                <div style={{ ...style, marginTop: '30px', marginBottom: '30px' }}>
-                    <Line
-                        data={combinedLineData}
-                        options={options}
-                    />
-                </div>
-            </Fragment>
-        );
-    }
-}
-
-export default Page;
+*/
