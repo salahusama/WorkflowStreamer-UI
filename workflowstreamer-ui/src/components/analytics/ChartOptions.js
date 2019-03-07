@@ -3,6 +3,7 @@ import { Card, MenuItem, Button, ButtonGroup, Popover, Position, Intent } from '
 import { Select } from '@blueprintjs/select';
 import { DateRangePicker } from '@blueprintjs/datetime';
 import { Events } from '../../constants/analytics';
+import { getMonthYearFromDate } from '../../utils/DateUtil';
 
 class ChartOptions extends PureComponent {
     constructor(props) {
@@ -31,6 +32,8 @@ class ChartOptions extends PureComponent {
             form: {
                 ...form,
                 ...defaultOptions,
+                startDate: defaultOptions.startDate ? new Date(defaultOptions.startDate) : null,
+                endDate: defaultOptions.endDate ? new Date(defaultOptions.endDate) : null, 
             }
         });
     }
@@ -64,6 +67,10 @@ class ChartOptions extends PureComponent {
 
     handleDateChange(value) {
         const { form } = this.state;
+        
+        if (value[0] && value[1]) {
+            this.toggleDatePicker();
+        }
 
         this.setState({
             form: {
@@ -119,7 +126,7 @@ class ChartOptions extends PureComponent {
         const { isDatePickerOpen, form: { endDate, startDate } } = this.state;
         return (
             <Popover isOpen={isDatePickerOpen} position={Position.BOTTOM_RIGHT}>
-                <Button alignText="left" text="Date Range" rightIcon="calendar" onClick={this.toggleDatePicker} />
+                <Button alignText="left" text={endDate || startDate ? `${getMonthYearFromDate(startDate)} -> ${getMonthYearFromDate(endDate)}` : 'Date Range'} rightIcon="calendar" onClick={this.toggleDatePicker} />
                 <DateRangePicker
                     value={[startDate, endDate]}
                     onChange={this.handleDateChange}

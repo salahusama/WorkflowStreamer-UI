@@ -15,7 +15,7 @@ class AnalyticsPage extends PureComponent {
     }
 
     render() {
-        const { status, events } = this.props;
+        const { status, events, options } = this.props;
         return (
             <Fragment>
                 <Navbar fixedToTop={true}>
@@ -31,7 +31,7 @@ class AnalyticsPage extends PureComponent {
 
                 <div className="analytics-charts" > 
                     {status === Status.SUCCESS
-                        ? <Charts events={events} />
+                        ? <Charts events={events} options={options} />
                         : <Spinner size={100} intent={Intent.SUCCESS} className="page-spinner" />
                     }
                 </div>
@@ -42,6 +42,7 @@ class AnalyticsPage extends PureComponent {
 
 AnalyticsPage.defaultProps = {
     events: PropTypes.array,
+    options: PropTypes.array,
     status: PropTypes.string,
     getEvents: PropTypes.func.isRequired,
 };
@@ -49,6 +50,7 @@ AnalyticsPage.defaultProps = {
 const mapStateToProps = state => ({
     events: state.analytics.events.events,
     status: state.analytics.events.status,
+    options: state.analytics.options.options,
 });
 
 const mapDispatchToProps = dispatch => ({

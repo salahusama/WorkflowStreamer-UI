@@ -23,11 +23,7 @@ class OptionsColumn extends PureComponent {
 
     componentWillReceiveProps(nextProps) {
         const { options } = nextProps;
-        const { chartOptions } = this.state;
-
-        if (chartOptions.length !== options.length) {
-            this.setState({ chartOptions: options });
-        }
+        this.setState({ chartOptions: options });
     }
 
     handleOptionsSelect(id, details) {
