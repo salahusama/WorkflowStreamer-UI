@@ -63,9 +63,8 @@ export function logIn(details) {
                 try {
                     json = await response.json();
                 } catch (error) {
-                    console.log(error);
                     AppToaster.show({
-                        message: "We messed up",
+                        message: "It seems like an error occurred during login. Please try again.",
                         intent: Intent.DANGER,
                     });
                     return dispatch({ type: ActionTypes.FAILED_LOGIN });

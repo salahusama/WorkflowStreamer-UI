@@ -76,6 +76,8 @@ class OptionsColumn extends PureComponent {
 }
 
 OptionsColumn.propTypes = {
+    status: PropTypes.string,
+    options: PropTypes.array.isRequired,
     getChartOptions: PropTypes.func.isRequired,
     submitChartOptions: PropTypes.func.isRequired,
 };

@@ -5,3 +5,14 @@ export const Events = [{
     name: 'project-interaction',
     Types: ['created'],
 }];
+
+export const defaultChartOptions = {
+    maintainAspectRatio: true,
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+    }
+};

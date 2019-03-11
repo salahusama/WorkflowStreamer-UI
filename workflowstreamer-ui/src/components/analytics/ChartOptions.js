@@ -33,7 +33,7 @@ class ChartOptions extends PureComponent {
                 ...form,
                 ...defaultOptions,
                 startDate: defaultOptions.startDate ? new Date(defaultOptions.startDate) : null,
-                endDate: defaultOptions.endDate ? new Date(defaultOptions.endDate) : null, 
+                endDate: defaultOptions.endDate ? new Date(defaultOptions.endDate) : null,
             }
         });
     }
