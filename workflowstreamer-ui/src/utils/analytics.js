@@ -1,10 +1,38 @@
-import React, { PureComponent, Fragment } from 'react';
-import { Navbar, Alignment } from '@blueprintjs/core';
-import UserMenu from './UserMenu';
-import MenuOpener from './MenuOpener';
+import { getMonthsInRange, getMonthYearFromDate } from './DateUtil';
+import { borderColors, backgroundColors } from '../constants/colors';
 
-import { Line, Bar } from 'react-chartjs-2';
+export function getChartData(events, details) {
+    const { eventName, eventType, startDate, endDate } = details;
 
+    const filteredEvents = events
+        .filter(event => eventName && event.eventName === eventName)
+        .filter(event => eventType && event.eventType === eventType)
+        .filter(event => startDate && new Date(event.time) >= new Date(startDate))
+        .filter(event => endDate && new Date(event.time) <= new Date(endDate));
+
+    const months = getMonthsInRange(new Date(startDate), new Date(endDate));
+    const data = months.map(label => 0);
+
+    filteredEvents.forEach(event => {
+        const dataIndex = months.indexOf(getMonthYearFromDate(new Date(event.time)));
+        data[dataIndex] += 1;
+    });
+
+    const chartData = {
+        labels: months,
+        datasets: [{
+            label: `${eventName} | ${eventType}`,
+            data,
+            borderWidth: 1,
+            borderColor: Array(data.length).fill(borderColors).flat(),
+            backgroundColor: Array(data.length).fill(backgroundColors).flat(),
+        }],
+    };
+
+    return chartData;
+}
+
+/*
 const barData = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [{
@@ -77,60 +105,4 @@ const combinedLineData = {
         borderWidth: 1
     }],
 };
-
-const options = {
-    maintainAspectRatio: true,
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero:true
-            }
-        }]
-    }
-};
-
-const style = {
-    maxWidth: '600px',
-    marginLeft: 'auto',
-    marginRight: 'auto'
-};
-
-class Page extends PureComponent {
-    render() {
-        return (
-            <Fragment>
-                <Navbar fixedToTop={true}>
-                    <Navbar.Group align={Alignment.LEFT}>
-                        <MenuOpener />
-                    </Navbar.Group>
-                    <Navbar.Group align={Alignment.RIGHT}>
-                        <UserMenu />
-                    </Navbar.Group>
-                </Navbar>
-
-                <div style={style}>
-                    <Bar
-                        data={barData}
-                        options={options}
-                    />
-                </div>
-
-                <div style={{ ...style, marginTop: '30px' }}>
-                    <Line
-                        data={lineData}
-                        options={options}
-                    />
-                </div>
-
-                <div style={{ ...style, marginTop: '30px', marginBottom: '30px' }}>
-                    <Line
-                        data={combinedLineData}
-                        options={options}
-                    />
-                </div>
-            </Fragment>
-        );
-    }
-}
-
-export default Page;
+*/

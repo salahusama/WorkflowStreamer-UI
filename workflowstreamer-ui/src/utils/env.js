@@ -9,3 +9,7 @@ export function getWorkflowStreamerBase() {
     // Otherwise, return local
     return WORKFLOWSTREAMER_BASE;
 }
+
+export function getAnalyticsBase() {
+    return 'http://localhost:5000';
+}

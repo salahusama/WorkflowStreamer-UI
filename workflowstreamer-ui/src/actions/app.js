@@ -56,10 +56,19 @@ export function logIn(details) {
     return async dispatch => {
         dispatch({ type: ActionTypes.REQUESTED_LOGIN });
         const response = await AppApi.logIn(loginDetails);
-        
+
         switch (response.status) {
             case 200:
-                const json = await response.json(); 
+                let json = {};
+                try {
+                    json = await response.json();
+                } catch (error) {
+                    AppToaster.show({
+                        message: "It seems like an error occurred during login. Please try again.",
+                        intent: Intent.DANGER,
+                    });
+                    return dispatch({ type: ActionTypes.FAILED_LOGIN });
+                }
                 updateSessionCookie(json.userId);
                 AppToaster.show({
                     message: "Login Successful",

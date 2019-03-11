@@ -4,6 +4,19 @@ export function getDateString(date) {
     return date && new Date(date).toDateString();
 }
 
+export function getMonthYearFromDate(date) {
+    return date.toLocaleString('en-us', { month: 'long' }) + ' ' + date.getFullYear();
+}
+
+export function getMonthsInRange(startDate, endDate) {
+    const labels = [];
+    while (startDate < endDate) {
+        labels.push(getMonthYearFromDate(startDate));
+        startDate.setMonth(startDate.getMonth() + 1)
+    }
+    return labels;
+};
+
 export function getIntentBasedOnDate(dueDate) {
     if (!dueDate) {
         return Intent.NONE;

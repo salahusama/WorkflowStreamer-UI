@@ -1,0 +1,31 @@
+.analytics-options {
+    float: left;
+    height: -webkit-fill-available;
+    overflow-x: scroll;
+    margin-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    width: 40vh;
+    border-right: 2px solid #c3c2c2;
+}
+
+.analytics-charts {
+    float: left;
+    margin-left: 30px;
+    max-width: calc(100% - 40vw);
+    min-width: calc(100% - 40vw);
+    max-height: -webkit-fill-available;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.options-spinner {
+    margin-top: 30px;
+}
+
+.chart-card {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}

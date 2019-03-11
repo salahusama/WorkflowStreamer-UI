@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import App from './components/App';
-import AnalyticsPage from "./components/AnalyticsPage";
+import AnalyticsPage from "./components/analytics/AnalyticsPage";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginForm from "./components/LoginPage";
 
