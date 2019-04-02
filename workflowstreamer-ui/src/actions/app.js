@@ -4,6 +4,7 @@ import * as AppApi from '../api/app';
 import * as UsersApi from '../api/user';
 import * as TasksApi from '../api/tasks';
 import * as ProjectsApi from '../api/projects';
+import * as TeamsApi from '../api/teams';
 import AppToaster from '../utils/AppToaster';
 import { removeNull } from '../utils/ObjectUtils';
 import Session from '../constants/session';
@@ -265,5 +266,45 @@ export function restoreSession() {
                     payload: json,
                 });
             });
+    };
+}
+
+export function getTeams() {
+    return async (dispatch, getState) => {
+        const { userId } = getState().auth.user;
+        return TeamsApi.getUserTeams(userId)
+            .then(response => response.json())
+            .then(json => dispatch({
+                type: ActionTypes.RECIEVED_TEAMS,
+                payload: json,
+            }));
+    };
+}
+
+export function addTeam(teamDetails) {
+    return async (dispatch, getState) => {
+        const newTeam = {
+            ...teamDetails,
+            creatorId: getState().auth.user.userId,
+        };
+        const response = await TeamsApi.addTeam(newTeam);
+        
+        if (response.status === 200) {
+            const json = await response.json(); 
+            AppToaster.show({
+                message: 'Team added successfully.',
+                intent: Intent.SUCCESS,
+            });
+            return dispatch({
+                type: ActionTypes.ADDED_TEAM,
+                payload: json,
+            });
+        } else {
+            AppToaster.show({
+                message: 'Error occured while adding new team. Please try again.',
+                intent: Intent.DANGER,
+            });
+            return dispatch({ type: ActionTypes.FAILED_PROJECT_ADITION });
+        }
     };
 }
