@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { Button, MenuItem, PopoverInteractionKind } from '@blueprintjs/core';
 import { Select } from '@blueprintjs/select';
 import { getProjects } from '../actions/app';
+import { getTeamById } from '../actions/teamActions';
 import ScreenOpener from './ScreenOpener';
 import ProjectScreen from './ProjectScreen';
 
 const allProjectsObj = {
     projectId: 0,
+    teamId: 0,
     name: 'All Projects',
     description: 'Show All projects',
 };
@@ -45,14 +47,16 @@ class ProjectSelector extends PureComponent {
     }
 
     renderItem(project, { handleClick }) {
-        const { projectId, name, description } = project;
+        const { projectId, name, teamId } = project;
         const { selectedItem } = this.state;
+
+        const team = this.props.getTeamById(teamId);
 
         return (
             <MenuItem
                 key={projectId}
                 text={name}
-                label={description}
+                label={team ? team.name : `Team ${teamId}`}
                 onClick={handleClick}
                 active={project === selectedItem}
             />
@@ -122,6 +126,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getProjects: () => dispatch(getProjects()),
+        getTeamById: (id) => dispatch(getTeamById(id)),
     };
 }
 

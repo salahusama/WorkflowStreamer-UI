@@ -3,6 +3,7 @@ import auth from './auth';
 import tasks from './tasks';
 import userStages from './userStages';
 import projects from './projects';
+import teams from './teams';
 import analytics from './analytics';
 
 export default combineReducers({
@@ -11,4 +12,5 @@ export default combineReducers({
     userStages,
     projects,
     analytics,
+    teams,
 });
