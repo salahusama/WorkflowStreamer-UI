@@ -7,6 +7,7 @@ import { DatePicker, TimePrecision } from '@blueprintjs/datetime';
 import { getDateString, getIntentBasedOnDate } from '../utils/DateUtil';
 import { updateTask } from '../actions/app';
 import PriorityPicker from './PriorityPicker';
+import CommentsContainer from './CommentsContainer';
 
 class TaskOverlay extends PureComponent {
     constructor(props) {
@@ -85,7 +86,7 @@ class TaskOverlay extends PureComponent {
     }
 
     render() {
-        const { task: { title, description, dueDate, priority, estimatedWork, isRecommended } } = this.props;
+        const { task: { taskId, title, description, dueDate, priority, estimatedWork, isRecommended } } = this.props;
         const { isOpen, form } = this.state;
         const selectedDueDate = dueDate || form.dueDate ? new Date(form.dueDate || dueDate) : null;
         const isTaskEdited = form.title || form.description || form.dueDate || form.priority || form.estimatedWork;
@@ -154,6 +155,8 @@ class TaskOverlay extends PureComponent {
                         Save
                     </Button>
                 )}
+
+                <CommentsContainer taskId={taskId} />
             </Card>
         );
     }

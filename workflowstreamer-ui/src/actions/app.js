@@ -308,3 +308,45 @@ export function addTeam(teamDetails) {
         }
     };
 }
+
+export function getTaskComments(taskId) {
+    return async (dispatch) => {
+        return TasksApi.getTaskComments(taskId)
+            .then(response => response.json())
+            .then(json => dispatch({
+                type: ActionTypes.RECIEVED_TASK_COMMENTS,
+                payload: {
+                    taskId,
+                    taskComments: json,
+                },
+            }));
+    };
+}
+
+export function addComment(comment) {
+    return async (dispatch, getState) => {
+        const newComment = {
+            ...comment,
+            creatorId: getState().auth.user.userId,
+        };
+        const response = await TasksApi.addComment(newComment);
+        
+        if (response.status === 200) {
+            const json = await response.json(); 
+            AppToaster.show({
+                message: 'Comment added successfully.',
+                intent: Intent.SUCCESS,
+            });
+            return dispatch({
+                type: ActionTypes.ADDED_COMMENT,
+                payload: json,
+            });
+        } else {
+            AppToaster.show({
+                message: 'Error occured while adding new comment. Please try again.',
+                intent: Intent.DANGER,
+            });
+            return dispatch({ type: ActionTypes.FAILED_COMMENT_ADITION });
+        }
+    };
+}

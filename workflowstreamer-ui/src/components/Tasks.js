@@ -64,7 +64,7 @@ Tasks.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        tasks: state.tasks,
+        tasks: state.tasks.tasks,
         userStages: state.userStages,
         selectedProject: state.projects.selectedProject,
     };
