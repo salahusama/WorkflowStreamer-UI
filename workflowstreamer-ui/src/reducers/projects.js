@@ -1,6 +1,10 @@
 import ActionTypes from '../constants/actionTypes';
 
-export default function projects(state = {}, action) {
+const defaultState = {
+    projects: [],
+};
+
+export default function projects(state = defaultState, action) {
     switch (action.type) {
         case ActionTypes.RECIEVED_PROJECTS:
             return {
