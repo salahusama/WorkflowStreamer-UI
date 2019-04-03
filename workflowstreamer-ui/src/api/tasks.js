@@ -28,3 +28,17 @@ export function updateTask(updatedDetails) {
         body: JSON.stringify(updatedDetails),
     });
 }
+
+export function getTaskComments(taskId) {
+    const url = `${getWorkflowStreamerBase()}/tasks/task/${taskId}/comments`;
+    return fetch(url);
+}
+
+export function addComment(newComment) {
+    const url = `${getWorkflowStreamerBase()}/tasks/task/${newComment.taskId}/comments`;
+    return fetch(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newComment),
+    });
+}
