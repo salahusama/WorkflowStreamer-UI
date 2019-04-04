@@ -6,7 +6,7 @@ import Status from '../constants/status';
 class PrivateRoute extends PureComponent {
     render() {
         const { status, component, location, ...props } = this.props;
-        
+
         if (status !== Status.SUCCESS) {
             return <Redirect to={{ pathname: '/login', from: location }} />
         }

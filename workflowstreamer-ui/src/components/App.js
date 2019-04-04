@@ -27,6 +27,8 @@ class App extends PureComponent {
     }
 
     render() {
+        const { teamId } = this.props.match.params;
+
         return (
             <div>
                 <Navbar fixedToTop={true}>
@@ -55,7 +57,7 @@ class App extends PureComponent {
                     </Navbar.Group>
 
                     <Navbar.Group align={Alignment.RIGHT}>
-                        <UserMenu />
+                        <UserMenu currTeamId={Number(teamId)} />
                     </Navbar.Group>
                 </Navbar>
 

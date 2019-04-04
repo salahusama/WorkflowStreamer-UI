@@ -9,10 +9,10 @@ export default function Router() {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Redirect exact from="/" to="/app" />
+				<Redirect exact from="/" to="/login" />
 				<Route path="/login" component={LoginForm} />
-				<PrivateRoute path="/app" component={App} />
-				<PrivateRoute path="/analytics" component={AnalyticsPage} />
+				<PrivateRoute path="/:teamId/app" component={App} />
+				<PrivateRoute path="/:teamId/analytics" component={AnalyticsPage} />
 			</Switch>
 		</BrowserRouter>
 	);
