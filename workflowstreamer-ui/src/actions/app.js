@@ -108,7 +108,7 @@ export function logout() {
 export function getTasks() {
     return async (dispatch, getState) => {
         const { userId } = getState().auth.user;
-        return TasksApi.getUserTasks(userId)
+        return TasksApi.getUserTeamTasks(userId)
             .then(response => response.json())
             .then(json => dispatch({
                 type: ActionTypes.RECIEVED_TASKS,
