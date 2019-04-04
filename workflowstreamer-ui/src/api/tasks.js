@@ -5,6 +5,11 @@ export function getUserTasks(userId) {
     return fetch(url);
 }
 
+export function getUserTeamTasks(userId) {
+    const url = `${getWorkflowStreamerBase()}/tasks/teams/user/${userId}`;
+    return fetch(url);
+}
+
 export function addTask({ creatorId, title, description, projectId, stage }) {
     const url = `${getWorkflowStreamerBase()}/tasks/task`;
     return fetch(url, {
