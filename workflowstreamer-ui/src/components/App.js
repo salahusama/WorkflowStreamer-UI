@@ -9,7 +9,7 @@ import { getTeams, updateSelectedProject } from '../actions/app';
 import UserMenu from './UserMenu';
 import ScreenOpener from './ScreenOpener';
 import ProjectScreen from './ProjectScreen';
-import StageScreen from './StageScreen';
+// import StageScreen from './StageScreen';
 import MenuOpener from './MenuOpener';
 
 class App extends PureComponent {
@@ -40,12 +40,13 @@ class App extends PureComponent {
                                 <ProjectScreen />
                             </ScreenOpener>
                         </Tooltip>
-                        <Navbar.Divider />
+                        {/* Stages are universal. This has no point for now */}
+                        {/* <Navbar.Divider />
                         <Tooltip content="Stage Settings" position={Position.BOTTOM}>
                             <ScreenOpener icon="exchange">
                                 <StageScreen />
                             </ScreenOpener>
-                        </Tooltip>
+                        </Tooltip> */}
                         <Navbar.Divider />
                         <Tooltip content="New Task" position={Position.BOTTOM}>
                             <ScreenOpener icon="insert" toggleOnSubmit={true}>
