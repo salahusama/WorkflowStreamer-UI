@@ -15,7 +15,7 @@ class AnalyticsPage extends PureComponent {
     }
 
     render() {
-        const { status, events, options } = this.props;
+        const { status, events, options, match : { params } } = this.props;
         return (
             <Fragment>
                 <Navbar fixedToTop={true}>
@@ -23,7 +23,7 @@ class AnalyticsPage extends PureComponent {
                         <MenuOpener />
                     </Navbar.Group>
                     <Navbar.Group align={Alignment.RIGHT}>
-                        <UserMenu />
+                        <UserMenu currTeamId={Number(params.teamId)} />
                     </Navbar.Group>
                 </Navbar>
 

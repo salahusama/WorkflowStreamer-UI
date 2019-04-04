@@ -1,16 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { logout } from '../actions/app';
+import { Redirect, withRouter } from 'react-router-dom';
 import { Position, Button, Icon, Menu, MenuItem, Intent, Popover } from '@blueprintjs/core';
+import { logout } from '../actions/app';
 
 class Tasks extends PureComponent {
     constructor(props) {
         super(props);
         this.togglePopover = this.togglePopover.bind(this);
+        this.changeTeam = this.changeTeam.bind(this);
         this.state = {
             isOpen: false,
+            newTeamId: null,
         };
     }
 
@@ -18,9 +20,19 @@ class Tasks extends PureComponent {
         const { isOpen } = this.state;
         this.setState({ isOpen: !isOpen });
     }
-    
+
+    changeTeam(newTeamId) {
+        this.setState({ newTeamId });
+    }
+
     render() {
-        const { isOpen } = this.state;
+        const { isOpen, newTeamId } = this.state;
+        const { teams, currTeamId, location: { pathname } } = this.props;
+
+        if (newTeamId && newTeamId !== currTeamId) {
+            const target = pathname.split('/').slice(-1)[0];
+            return <Redirect to={{ pathname: `/${newTeamId}/${target}` }} />
+        }
 
         return (
             <Popover
@@ -31,6 +43,16 @@ class Tasks extends PureComponent {
                     <Icon icon="user" iconSize={20} />
                 </Button>
                 <Menu>
+                    <MenuItem text="Change Team">
+                        {teams.map(({ teamId, name }) => (
+                            <MenuItem
+                                key={teamId}
+                                text={name}
+                                intent={teamId === currTeamId ? Intent.PRIMARY : Intent.NONE}
+                                onClick={() => this.changeTeam(teamId)}
+                            />
+                        ))}
+                    </MenuItem>
                     <MenuItem text="Logout" intent={Intent.WARNING} onClick={this.props.logout} />
                 </Menu>
             </Popover>
@@ -40,7 +62,13 @@ class Tasks extends PureComponent {
 
 Tasks.propTypes = {
     logout: PropTypes.func.isRequired,
+    teams: PropTypes.array.isRequired,
+    currTeamId: PropTypes.number.isRequired,
 }
+
+const mapStateToProps = state => ({
+    teams: state.auth.user.teams,
+});
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -48,4 +76,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(null, mapDispatchToProps)(Tasks);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tasks));

@@ -18,9 +18,10 @@ class SidebarMenu extends PureComponent {
     render() {
         const { target } = this.state;
         const { pathname } = this.props.location;
-        
+
         if (target) {
-            return <Redirect push to={target} />;
+            const teamId = pathname.split('/')[1];
+            return <Redirect push to={`/${teamId}/${target}`} />;
         }
 
         return (
@@ -32,9 +33,9 @@ class SidebarMenu extends PureComponent {
                     vertical={true}
                     style={{ width: '25vw' }}
                 >
-                    <Button disabled={pathname === '/app'} icon="comparison" text="Kanban View" onClick={() => this.redirectTo('/app')} />
+                    <Button disabled={pathname.includes('/app')} icon="comparison" text="Kanban View" onClick={() => this.redirectTo('app')} />
                     <Divider />
-                    <Button disabled={pathname === '/analytics'} icon="chart" text="Analytics" onClick={() => this.redirectTo('/analytics')} />
+                    <Button disabled={pathname.includes('/analytics')} icon="chart" text="Analytics" onClick={() => this.redirectTo('analytics')} />
                     <Divider />
                 </ButtonGroup>
             </Card>

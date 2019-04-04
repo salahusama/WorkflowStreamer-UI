@@ -53,13 +53,14 @@ class LoginPage extends PureComponent {
     }
 
     render() {
-        const { status, location } = this.props;
+        const { status, location, teams } = this.props;
         const { signup } = this.state.form;
         const isPending = status === Status.PENDING;
         const formAction = signup ? 'Sign Up' : 'Log In';
 
         if (status === Status.SUCCESS) {
-            return <Redirect to={location.from || '/'} />
+            const teamId = teams[0].teamId; 
+            return <Redirect to={location.from || `/${teamId}/app`} />
         }
 
         return (
@@ -88,10 +89,12 @@ LoginPage.propTypes = {
     logIn: PropTypes.func.isRequired,
     restoreSession: PropTypes.func.isRequired,
     state: PropTypes.string,
+    teams: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
     status: state.auth.status,
+    teams: state.auth.user ? state.auth.user.teams : [],
 })
 
 const mapDispatchToProps = dispatch => ({
