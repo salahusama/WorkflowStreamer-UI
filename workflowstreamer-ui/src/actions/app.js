@@ -269,18 +269,6 @@ export function restoreSession() {
     };
 }
 
-export function getTeams() {
-    return async (dispatch, getState) => {
-        const { userId } = getState().auth.user;
-        return TeamsApi.getUserTeams(userId)
-            .then(response => response.json())
-            .then(json => dispatch({
-                type: ActionTypes.RECIEVED_TEAMS,
-                payload: json,
-            }));
-    };
-}
-
 export function addTeam(teamDetails) {
     return async (dispatch, getState) => {
         const newTeam = {
