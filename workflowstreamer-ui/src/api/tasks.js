@@ -6,7 +6,7 @@ export function getUserTasks(userId) {
 }
 
 export function getUserTeamTasks(userId) {
-    const url = `${getWorkflowStreamerBase()}/tasks/teams/user/${userId}`;
+    const url = `${getWorkflowStreamerBase()}/tasks/teams/user/${userId}/beta`;
     return fetch(url);
 }
 
