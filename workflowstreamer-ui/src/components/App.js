@@ -5,7 +5,7 @@ import { Navbar, Alignment, Tooltip, Position } from '@blueprintjs/core';
 import Tasks from './Tasks';
 import NewTaskForm from './NewTaskForm';
 import ProjectSelector from './ProjectSelector';
-import { getTeams, updateSelectedProject } from '../actions/app';
+import { updateSelectedProject } from '../actions/app';
 import UserMenu from './UserMenu';
 import ScreenOpener from './ScreenOpener';
 import ProjectScreen from './ProjectScreen';
@@ -16,10 +16,6 @@ class App extends PureComponent {
     constructor(props) {
         super(props);
         this.setSelectedProject = this.setSelectedProject.bind(this);
-    }
-
-    componentWillMount() {
-        this.props.getTeams();
     }
 
     setSelectedProject(project) {
@@ -80,7 +76,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         updateSelectedProject: (project) => dispatch(updateSelectedProject(project)),
-        getTeams: () => dispatch(getTeams()),
     };
 }
 

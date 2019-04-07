@@ -13,3 +13,8 @@ export function addTeam(newTeam) {
         body: JSON.stringify(newTeam),
     });
 }
+
+export function getTeamMembers(teamId) {
+    const url = `${getWorkflowStreamerBase()}/teams/team/${teamId}/members`;
+    return fetch(url);
+}

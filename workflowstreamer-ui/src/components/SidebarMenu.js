@@ -1,6 +1,20 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Card, Button, Alignment, ButtonGroup, Divider } from '@blueprintjs/core';
 import { Redirect, withRouter } from 'react-router-dom';
+
+const SideBarMenuItems = [{
+    path: '/app',
+    text: 'Kanban View',
+    icon: 'comparison',
+}, {
+    path: '/analytics',
+    text: 'Analytics',
+    icon: 'chart',
+}, {
+    path: '/teams',
+    text: 'Teams',
+    icon: 'people',
+}]
 
 class SidebarMenu extends PureComponent {
     constructor(props) {
@@ -32,10 +46,12 @@ class SidebarMenu extends PureComponent {
                     vertical={true}
                     style={{ width: '25vw' }}
                 >
-                    <Button disabled={pathname === '/app'} icon="comparison" text="Kanban View" onClick={() => this.redirectTo('/app')} />
-                    <Divider />
-                    <Button disabled={pathname === '/analytics'} icon="chart" text="Analytics" onClick={() => this.redirectTo('/analytics')} />
-                    <Divider />
+                    {SideBarMenuItems.map(({ text, path, icon }, index) => (
+                        <Fragment key={index}>
+                            <Button disabled={pathname === path} icon={icon} text={text} onClick={() => this.redirectTo(path)} />
+                            <Divider />
+                        </Fragment>
+                    ))}
                 </ButtonGroup>
             </Card>
         );
