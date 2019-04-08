@@ -11,6 +11,7 @@ class ProjectScreen extends PureComponent {
         this.handleProjectChange = this.handleProjectChange.bind(this);
         this.state = {
             selectedProject: null,
+            isOpen: false,
         };
     }
 

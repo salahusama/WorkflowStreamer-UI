@@ -23,6 +23,14 @@ export default function teams(state = initialState, { type, payload }) {
                     status: Status.SUCCESS,
                 }
             }
+        case ActionTypes.ADDED_USER_TO_TEAM:
+            return {
+                ...state,
+                members: {
+                    ...state.members,
+                    members: state.members.members.concat(payload),
+                }
+            }
         default:
             return state;
     }
