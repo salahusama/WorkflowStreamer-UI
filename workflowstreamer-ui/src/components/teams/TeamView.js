@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Card, Spinner } from '@blueprintjs/core';
 import { getTeamMembers } from '../../actions/teamActions';
 import Status from '../../constants/status';
+import MembersTable from './MembersTable';
 
 class TeamView extends PureComponent {
     componentDidMount() {
@@ -19,31 +20,6 @@ class TeamView extends PureComponent {
         }
     }
 
-    renderMembersTable(members) {
-        return (
-            <table className="bp3-html-table bp3-html-table-bordered bp3-html-table-striped bp3-interactive">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Role Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {members.map((user, index) => (
-                        <tr key={index}>
-                            <td>{user.username}</td>
-                            <td>{user.email}</td>
-                            <td>{user.role}</td>
-                            <td>{user.roleDescription}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        );
-    }
-
     render() {
         const { team, members, status } = this.props;
 
@@ -57,7 +33,7 @@ class TeamView extends PureComponent {
 
                     {status !== Status.SUCCESS
                     ? <Spinner />
-                    : this.renderMembersTable(members)
+                    : <MembersTable members={members} team={team} />
                     }
                 </Card>
             </div>
