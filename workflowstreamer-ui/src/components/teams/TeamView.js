@@ -16,7 +16,7 @@ class TeamView extends PureComponent {
         const { team } = this.props;
 
         if (team.teamId !== newProps.team.teamId) {
-            this.props.getTeamMembers(team.teamId);
+            this.props.getTeamMembers(newProps.team.teamId);
         }
     }
 
