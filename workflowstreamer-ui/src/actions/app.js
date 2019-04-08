@@ -108,7 +108,7 @@ export function logout() {
 export function getTasks() {
     return async (dispatch, getState) => {
         const { userId } = getState().auth.user;
-        return TasksApi.getUserTasks(userId)
+        return TasksApi.getUserTeamTasks(userId)
             .then(response => response.json())
             .then(json => dispatch({
                 type: ActionTypes.RECIEVED_TASKS,
@@ -266,18 +266,6 @@ export function restoreSession() {
                     payload: json,
                 });
             });
-    };
-}
-
-export function getTeams() {
-    return async (dispatch, getState) => {
-        const { userId } = getState().auth.user;
-        return TeamsApi.getUserTeams(userId)
-            .then(response => response.json())
-            .then(json => dispatch({
-                type: ActionTypes.RECIEVED_TEAMS,
-                payload: json,
-            }));
     };
 }
 

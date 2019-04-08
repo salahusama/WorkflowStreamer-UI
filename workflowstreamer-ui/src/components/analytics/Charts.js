@@ -10,10 +10,13 @@ class Charts extends PureComponent {
     render() {
         const { events, options } = this.props;
 
-        return options.map(option => {
+        return options.map((option, index) => {
             return (
-                <Fragment>
-                    <Card interactive={true} className="chart-card">
+                <Fragment key={index}>
+                    <Card
+                        className="chart-card"
+                        interactive={true}
+                    >
                         <Bar data={getChartData(events, option.details)} options={defaultChartOptions} />
                     </Card>
                 </Fragment>

@@ -1,17 +1,28 @@
 import ActionTypes from '../constants/actionTypes';
+import Status from '../constants/status';
 
-export default function teams(state = {}, { type, payload }) {
+const initialState = {
+    members: {
+        members: null,
+        status: Status.PENDING,
+    },
+};
+
+export default function teams(state = initialState, { type, payload }) {
     switch (type) {
-        case ActionTypes.RECIEVED_TEAMS:
+        case ActionTypes.REQUESTED_TEAM_MEMBERS:
             return {
                 ...state,
-                teams: payload,
+                members: initialState.members,
             };
-        case ActionTypes.ADDED_TEAM:
+        case ActionTypes.RECIEVED_TEAM_MEMBERS:
             return {
                 ...state,
-                teams: state.teams.concat(payload),
-            };
+                members: {
+                    members: payload,
+                    status: Status.SUCCESS,
+                }
+            }
         default:
             return state;
     }

@@ -27,6 +27,14 @@ export default function auth(state = {}, action) {
                 status: null,
                 user: null,
             };
+        case ActionTypes.ADDED_TEAM:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    teams: state.auth.user.teams.concat(action.payload),
+                },
+            };
         default:
             return state;
     }
