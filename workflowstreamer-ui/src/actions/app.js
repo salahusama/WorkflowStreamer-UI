@@ -273,7 +273,7 @@ export function addTeam(teamDetails) {
     return async (dispatch, getState) => {
         const newTeam = {
             ...teamDetails,
-            creatorId: getState().auth.user.userId,
+            userId: getState().auth.user.userId,
         };
         const response = await TeamsApi.addTeam(newTeam);
         

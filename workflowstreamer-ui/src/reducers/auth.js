@@ -32,7 +32,7 @@ export default function auth(state = {}, action) {
                 ...state,
                 user: {
                     ...state.user,
-                    teams: state.auth.user.teams.concat(action.payload),
+                    teams: state.user.teams.concat(action.payload),
                 },
             };
         default:

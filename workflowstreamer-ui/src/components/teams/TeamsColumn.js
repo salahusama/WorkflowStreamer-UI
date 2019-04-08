@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@blueprintjs/core';
+import ScreenOpener from '../ScreenOpener';
+import NewTeamForm from './NewTeamForm';
 
 function TeamsColumn({ teams, onSelect }) {
     return (
@@ -15,6 +17,9 @@ function TeamsColumn({ teams, onSelect }) {
                     {team.name}
                 </Card>
             ))}
+            <ScreenOpener icon="insert" toggleOnSubmit={true}>
+                <NewTeamForm />
+            </ScreenOpener>
         </div>
     );
 }
