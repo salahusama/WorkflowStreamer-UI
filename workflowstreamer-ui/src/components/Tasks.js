@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getTasks, getUserStages } from '../actions/app';
-import Column from './Column';
 import { Spinner, Intent, NonIdealState } from '@blueprintjs/core';
+import MovableColumn from './MovableColumn';
 
 class Tasks extends PureComponent {
     componentWillMount() {
@@ -42,7 +42,7 @@ class Tasks extends PureComponent {
             <div className="tasks-container">
                 {userStages.map((stage, index) => {
                     const columnTasks = tasksToShow.filter(task => task.stage === stage);
-                    return <Column
+                    return <MovableColumn
                         key={index}
                         columnName={stage}
                         tasks={columnTasks}

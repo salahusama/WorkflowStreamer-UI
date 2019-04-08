@@ -25,6 +25,7 @@
 .task-item {
     margin-top: 10px;
     position: relative;
+    min-width: calc(30vh - 12px);
 }
 
 .recommended-task {
