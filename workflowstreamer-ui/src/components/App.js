@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Navbar, Alignment, Tooltip, Position } from '@blueprintjs/core';
-import SortableTasks from './SortableTasks';
+import Tasks from './Tasks';
 import NewTaskForm from './NewTaskForm';
 import ProjectSelector from './ProjectSelector';
 import { updateSelectedProject } from '../actions/app';
@@ -56,7 +56,7 @@ class App extends PureComponent {
                     </Navbar.Group>
                 </Navbar>
 
-                <SortableTasks />
+                <Tasks />
             </div>
         );
     }
