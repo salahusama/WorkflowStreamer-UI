@@ -23,11 +23,9 @@ class Comments extends PureComponent {
 
         return (
             <div className="comments-container">
-                {taskComments.map(({ commentId, text, creatorId }) => (
+                {taskComments.map(({ commentId, text, username }) => (
                     <Card key={commentId} className="comment-card">
-                        <b>{creatorId}</b>
-                        <br />
-                        {text}
+                        <b>{username}</b>: {text}
                     </Card>
                 ))}
             </div>

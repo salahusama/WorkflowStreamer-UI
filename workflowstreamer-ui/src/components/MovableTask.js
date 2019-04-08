@@ -17,8 +17,6 @@ class MovableTask extends PureComponent {
     }
 
     toggleOverlay() {
-        console.log('wth');
-        
         const { isOverlayOpen } = this.state;
         this.setState({ isOverlayOpen: !isOverlayOpen });
     }
