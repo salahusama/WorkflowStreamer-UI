@@ -115,7 +115,7 @@ class TaskOverlay extends PureComponent {
                     large={true}
                     fill={true}
                     type="text"
-                    value={form.description || description}
+                    value={form.description || description || ''}
                     style={{ marginBottom: '10px' }}
                 />
 
