@@ -1,4 +1,4 @@
-import { WORKFLOWSTREAMER_BASE } from '../constants/api';
+import { WORKFLOWSTREAMER_BASE, ANALYTICS_BASE } from '../constants/api';
 
 export function getWorkflowStreamerBase() {
     // If NODE_ENV set to development, return dev link
@@ -11,5 +11,6 @@ export function getWorkflowStreamerBase() {
 }
 
 export function getAnalyticsBase() {
-    return 'http://localhost:5000';
+    return (process && process.env && process.env.NODE_ENV === 'development')
+        ? 'http://localhost:5000' : ANALYTICS_BASE;
 }
