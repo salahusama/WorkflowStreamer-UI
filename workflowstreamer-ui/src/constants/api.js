@@ -1,1 +1,2 @@
-export const WORKFLOWSTREAMER_BASE = 'http://35.197.210.15';
+export const WORKFLOWSTREAMER_BASE = 'http://35.234.147.16';
+export const ANALYTICS_BASE = 'http://35.228.231.77';
