@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getTasks, getUserStages } from '../actions/app';
+import { getTasks, getStages } from '../actions/app';
 import { Spinner, Intent, NonIdealState } from '@blueprintjs/core';
 import MovableColumn from './MovableColumn';
 
 class Tasks extends PureComponent {
     componentWillMount() {
-        this.props.getUserStages();
+        this.props.getStages();
         this.props.getTasks();
     }
 
@@ -56,7 +56,7 @@ class Tasks extends PureComponent {
 
 Tasks.propTypes = {
     getTasks: PropTypes.func.isRequired,
-    getUserStages: PropTypes.func.isRequired,
+    getStages: PropTypes.func.isRequired,
     tasks: PropTypes.array,
     userStages: PropTypes.array,
     selectedProject: PropTypes.object,
@@ -73,7 +73,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getTasks: () => dispatch(getTasks()),
-        getUserStages: () => dispatch(getUserStages()),
+        getStages: () => dispatch(getStages()),
     };
 }
 

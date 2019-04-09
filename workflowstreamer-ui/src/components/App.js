@@ -36,13 +36,6 @@ class App extends PureComponent {
                                 <ProjectScreen />
                             </ScreenOpener>
                         </Tooltip>
-                        {/* Stages are universal. This has no point for now */}
-                        {/* <Navbar.Divider />
-                        <Tooltip content="Stage Settings" position={Position.BOTTOM}>
-                            <ScreenOpener icon="exchange">
-                                <StageScreen />
-                            </ScreenOpener>
-                        </Tooltip> */}
                         <Navbar.Divider />
                         <Tooltip content="New Task" position={Position.BOTTOM}>
                             <ScreenOpener icon="insert" toggleOnSubmit={true}>

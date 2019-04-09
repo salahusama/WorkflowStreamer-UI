@@ -206,10 +206,10 @@ export function addProject(projectDetails) {
 }
 
 
-export function getUserStages() {
+export function getStages() {
     return async (dispatch, getState) => {
         const { userId } = getState().auth.user;
-        const response = await UsersApi.getUserStages(userId);
+        const response = await UsersApi.getStages(userId);
         const json = await response.json();
 
         if (response.status === 200) {
