@@ -117,7 +117,7 @@ class ChartOptions extends PureComponent {
                 itemRenderer={(value, handler) => this.renderOption(field, value, handler)}
                 onItemSelect={(value) => this.handleSelect(field, value)}
             >
-                <Button disabled={disabled} alignText="left" text={selectedValue || text} rightIcon="caret-down" fill={true} />
+                <Button disabled={disabled} alignText="left" text={selectedValue || text} rightIcon="caret-down" style={{ minWidth: '250px' }} />
             </Select>
         );
     }
