@@ -43,13 +43,6 @@ class TeamSelector extends PureComponent {
         this.props.onSelect(team, teams.indexOf(team) + 1);
     }
 
-    itemPredicate(input, team) {
-        return true;
-        // const teamName = team.toLowerCase();
-        // const inputValue = input.toLowerCase();
-        // return teamName.includes(inputValue);
-    }
-
     render() {
         const { className, teams } = this.props;
         const { selectedTeam } = this.state;
@@ -61,10 +54,9 @@ class TeamSelector extends PureComponent {
         return (
             <Select
                 items={teams}
-                itemPredicate={this.itemPredicate}
                 itemRenderer={this.renderItem}
                 onItemSelect={this.handleClick}
-                filterable={true}
+                filterable={false}
                 noResults={<MenuItem disabled={true} text="No results." />}
             >
                 <Button minimal={false} rightIcon="caret-down" className={className} text={selectedTeam.name || 'Select Team'} />

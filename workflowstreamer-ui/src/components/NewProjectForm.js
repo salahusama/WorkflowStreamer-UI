@@ -67,7 +67,13 @@ class NewProjectForm extends PureComponent {
                         <TextArea name="description" onChange={this.handleFormChange} large={true} fill={true} type="text" placeholder="Description" style={{ marginBottom: '10px' }} />
                         <TeamSelector onSelect={this.handleTeamSelect} />
                         <br />
-                        <Button type="submit" intent={Intent.SUCCESS}>Add Project</Button>
+                        <Button
+                            type="submit"
+                            intent={Intent.SUCCESS}
+                            style={{ marginTop: '10px' }}
+                        >
+                            Add Project
+                        </Button>
                     </FormGroup>
                 </form>
             </Card>
