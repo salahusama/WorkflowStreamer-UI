@@ -252,6 +252,12 @@ export function restoreSession() {
         return { type: ActionTypes.NO_SESSION };
     }
 
+    // This is to correct in rare cases where this breaks
+    if (userId === 'undefined') {
+        removeSessionCookie(Session.USER_ID);
+        return restoreSession();
+    }
+
     return async (dispatch) => {
         return UsersApi.getUserById(userId)
             .then(response => response.json())
