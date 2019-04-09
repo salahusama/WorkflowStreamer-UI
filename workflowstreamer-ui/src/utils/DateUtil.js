@@ -5,7 +5,7 @@ export function getDateString(date) {
 }
 
 export function getMonthYearFromDate(date) {
-    return date.toLocaleString('en-us', { month: 'long' }) + ' ' + date.getFullYear();
+    return date && date.toLocaleString('en-us', { month: 'long' }) + ' ' + date.getFullYear();
 }
 
 export function getMonthsInRange(startDate, endDate) {
