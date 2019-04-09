@@ -137,7 +137,7 @@ class TaskOverlay extends PureComponent {
 
 				<NumericInput
 					name="estimatedWork"
-					value={form.estimatedWork || estimatedWork || null}
+					value={form.estimatedWork || estimatedWork || 0}
 					onValueChange={this.handleEstimatedWorkChange}
 					min={0}
 					max={100}
